@@ -120,36 +120,57 @@ function formatTime(sec){
 }
 
 // A böngésző AudioContext API-jával adunk egy rövid csippanást.
-function beep(){
-  try{
-    if(!audioContext){
-      audioContext=new(window.AudioContext||window.webkitAudioContext)();
+function beep() {
+  try {
+    // AudioContext létrehozása első használatkor
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
 
+    // Mobil böngészőkben szükséges lehet az AudioContext felébresztése
     audioContext.resume();
 
-    const now=audioContext.currentTime;
+    const now = audioContext.currentTime;
 
-    // Három rövid, egyre magasabb "ti-ti-ti" hang.
-    const tones=[
-      {start:0,    frequency:880},
-      {start:0.18, frequency:1046},
-      {start:0.36, frequency:1318}
+    /*
+     * Figyelemfelkeltő timer-hang:
+     *
+     * TÍ - TÍ - TÍ - TÍÍÍ!
+     *
+     * Az első három rövid és fokozatosan magasabb,
+     * az utolsó hosszabb és a legmagasabb.
+     */
+    const tones = [
+      { start: 0.00, duration: 0.11, frequency: 880,  volume: 0.65 },
+      { start: 0.16, duration: 0.11, frequency: 1046, volume: 0.70 },
+      { start: 0.32, duration: 0.11, frequency: 1318, volume: 0.75 },
+      { start: 0.48, duration: 0.32, frequency: 1568, volume: 0.85 }
     ];
 
-    tones.forEach(t=>{
-      const oscillator=audioContext.createOscillator();
-      const gain=audioContext.createGain();
+    tones.forEach(tone => {
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
 
-      oscillator.type="sine";
-      oscillator.frequency.value=t.frequency;
+      // A square hullám karakteresebb és jobban hallható,
+      // mint a korábbi sine hullám.
+      oscillator.type = "square";
+      oscillator.frequency.value = tone.frequency;
 
-      const start=now+t.start;
-      const end=start+0.12;
+      const start = now + tone.start;
+      const end = start + tone.duration;
 
-      gain.gain.setValueAtTime(0.0001,start);
-      gain.gain.exponentialRampToValueAtTime(0.25,start+0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0001,end);
+      // Rövid fel- és lefutás, hogy ne kattogjon a hang.
+      gain.gain.setValueAtTime(0.0001, start);
+
+      gain.gain.exponentialRampToValueAtTime(
+        tone.volume,
+        start + 0.015
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        end
+      );
 
       oscillator.connect(gain);
       gain.connect(audioContext.destination);
@@ -158,8 +179,8 @@ function beep(){
       oscillator.stop(end);
     });
 
-  }catch(e){
-    console.warn("Hanghiba",e);
+  } catch (e) {
+    console.warn("Hanghiba:", e);
   }
 }
 
