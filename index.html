@@ -118,15 +118,45 @@ function formatTime(sec){
 // A böngésző AudioContext API-jával adunk egy rövid csippanást.
 function beep(){
   try{
-    if(!audioContext)audioContext=new(window.AudioContext||window.webkitAudioContext)();
+    if(!audioContext){
+      audioContext=new(window.AudioContext||window.webkitAudioContext)();
+    }
+
     audioContext.resume();
-    const o=audioContext.createOscillator(),g=audioContext.createGain();
-    o.frequency.value=880;o.type="sine";
-    g.gain.setValueAtTime(.0001,audioContext.currentTime);
-    g.gain.exponentialRampToValueAtTime(.22,audioContext.currentTime+.01);
-    g.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+.18);
-    o.connect(g);g.connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+.2);
-  }catch(e){console.warn("Hanghiba",e)}
+
+    const now=audioContext.currentTime;
+
+    // Három rövid, egyre magasabb "ti-ti-ti" hang.
+    const tones=[
+      {start:0,    frequency:880},
+      {start:0.18, frequency:1046},
+      {start:0.36, frequency:1318}
+    ];
+
+    tones.forEach(t=>{
+      const oscillator=audioContext.createOscillator();
+      const gain=audioContext.createGain();
+
+      oscillator.type="sine";
+      oscillator.frequency.value=t.frequency;
+
+      const start=now+t.start;
+      const end=start+0.12;
+
+      gain.gain.setValueAtTime(0.0001,start);
+      gain.gain.exponentialRampToValueAtTime(0.25,start+0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001,end);
+
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+
+      oscillator.start(start);
+      oscillator.stop(end);
+    });
+
+  }catch(e){
+    console.warn("Hanghiba",e);
+  }
 }
 
 function getLog(){try{return JSON.parse(localStorage.getItem(LOG_KEY)||"[]")}catch(e){return[]}}
