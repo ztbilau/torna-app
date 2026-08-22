@@ -3,6 +3,10 @@
     {
       "nev": "Billa",
       "alapertelmezettTorna": "Billa_reggelinyujtas"
+    },
+    {
+      "nev": "Kriszta",
+      "alapertelmezettTorna": "Kriszta_reggelitorna"
     }
   ]
 }
