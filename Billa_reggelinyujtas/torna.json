@@ -1,0 +1,60 @@
+{
+  "tornaId": "Billa_reggelinyujtas",
+  "tornaReszletesNeve": "5 perces reggeli nyújtás",
+  "feladatok": [
+    {
+      "nev": "Dinamikus Törzscsavarás",
+      "hosszMasodperc": 30,
+      "kep": "torzscsavaras.jpg",
+      "leiras": "Állj vállszéles terpeszbe, laza törzscsavarások mindkét irányba, a karok szabadon lengenek."
+    },
+    {
+      "nev": "Mellkasnyitás",
+      "hosszMasodperc": 30,
+      "kep": "mellkasnyitas.jpg",
+      "leiras": "Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!"
+    },
+    {
+      "nev": "Csípőhorpasz Nyújtás (Bal)",
+      "hosszMasodperc": 30,
+      "kep": "csipohorpasz.jpg",
+      "leiras": "Féltérden (bal láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"
+    },
+    {
+      "nev": "Csípőhorpasz Nyújtás (Jobb)",
+      "hosszMasodperc": 30,
+      "kep": "csipohorpasz.jpg",
+      "leiras": "Féltérden (jobb láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"
+    },
+    {
+      "nev": "Combhajlító Nyújtás (Bal)",
+      "hosszMasodperc": 30,
+      "kep": "combhajlito.jpg",
+      "leiras": "Bal láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."
+    },
+    {
+      "nev": "Combhajlító Nyújtás (Jobb)",
+      "hosszMasodperc": 30,
+      "kep": "combhajlito.jpg",
+      "leiras": "Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."
+    },
+    {
+      "nev": "Fókuszált Combnyújtás (Bal)",
+      "hosszMasodperc": 30,
+      "kep": "combnyujtas.jpg",
+      "leiras": "Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
+    },
+    {
+      "nev": "Fókuszált Combnyújtás (Jobb)",
+      "hosszMasodperc": 30,
+      "kep": "combnyujtas.jpg",
+      "leiras": "Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
+    },
+    {
+      "nev": "Macska-tehén Átmozgatás",
+      "hosszMasodperc": 60,
+      "kep": "macska-tehen.jpg",
+      "leiras": "Négykézláb. Lassan gömbölyítsd a hátad a plafon felé, majd óvatosan homoríts lefelé."
+    }
+  ]
+}
