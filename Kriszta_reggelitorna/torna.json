@@ -1,0 +1,36 @@
+{
+  "tornaId": "Reggeli_Gerinc_Es_Csipo_01",
+  "tornaReszletesNeve": "Reggeli 5 perces gerinc- és csípőébresztő rutin",
+  "feladatok": [
+    {
+      "nev": "Térdhúzás mellkashoz",
+      "hosszMasodperc": 60,
+      "kep": "terdhuzas.jpg",
+      "leiras": "Háton fekve húzza fel az egyik térdét a mellkasához. Szívja be a levegőt nyújtott lábbal, majd hosszan fújja ki, miközben a térdét a mellkasához húzza. Tartsa 2-3 légzésig, majd ismételje a másik lábbal, végül páros lábbal, finoman ringatózva."
+    },
+    {
+      "nev": "Finom törzscsavarás",
+      "hosszMasodperc": 60,
+      "kep": "torzscsavaras.jpg",
+      "leiras": "Háton fekve, mindkét talp a talajon. Karok 'T' alakban. Középen szívja be a levegőt, majd fújja ki, miközben a térdek lassan és óvatosan oldalra dőlnek. Szívja be újra, amíg visszahozza a lábakat középre, majd ismételje a másik oldalra."
+    },
+    {
+      "nev": "Fekvő pillangó póz (Csípőnyitás)",
+      "hosszMasodperc": 40,
+      "kep": "fekvo_pillango.jpg",
+      "leiras": "Maradjon háton fekve. Érintse össze a két talpát, és engedje a térdeit lazán, oldalra kidőlni. Lélegezzen mélyeket a hasába. Minden kifújásnál képzelje el, hogy a combjai egyre nehezebbek lesznek és süllyednek a talaj felé."
+    },
+    {
+      "nev": "Módosított Cicahát",
+      "hosszMasodperc": 90,
+      "kep": "modositott_cicahat.jpg",
+      "leiras": "Lassan forduljon négykézlábra. Egyenes (asztallap) háttal szívja be a levegőt, és fújja ki hosszan, miközben finoman felgömbölyíti a hátát. Belégzésre térjen vissza a kiinduló helyzetbe. Fontos: a derék homorítását szigorúan kerülni kell!"
+    },
+    {
+      "nev": "Pihenő Csecsemőpóz",
+      "hosszMasodperc": 90,
+      "kep": "csecsemopoz.jpg",
+      "leiras": "Négykézláb helyzetből tolja hátra a fenekét a sarkára, térdeit nyissa V-alakba, hogy a csípő is nyíljon. Homlok a talajon, karok elöl nyújtva. Szívja a levegőt mélyen a hátsó bordái felé, majd hosszan fújja ki. Pihenjen meg ebben a pózban."
+    }
+  ]
+}
