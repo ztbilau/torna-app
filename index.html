@@ -42,7 +42,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-radius:12px;overflow:auto;font-size:.85rem}
 .notice,.error,.success{padding:12px;border-radius:10px;margin-top:15px}
 .notice{background:#fff7e6;color:#8a5b00}.error{background:#fef3f2;color:#b42318}.success{background:#ecfdf3;color:var(--success)}
-.hidden{display:none!important}.config-section{border-top:1px solid var(--border);padding-top:22px;margin-top:22px}
+.hidden{display:none!important}.invisible{visibility:hidden!important}.config-section{border-top:1px solid var(--border);padding-top:22px;margin-top:22px}
 .small{font-size:.88rem}code{background:#f2f4f7;padding:2px 5px;border-radius:5px}
 @media(max-width:720px){.header{align-items:flex-start}.grid,.content,.stat-grid{grid-template-columns:1fr}.content{padding:18px}.info{order:-1}}
 </style>
@@ -77,7 +77,7 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
       <div class="timer" id="timer">00:30</div>
       <div class="actions">
         <button class="secondary" id="startFirst">Indítás</button>
-        <button class="primary hidden" id="next">Következő</button>
+        <button class="primary invisible" id="next">Következő</button>
       </div>
     </div>
   </div>
@@ -420,13 +420,13 @@ function renderExercise(){
    * Csak az első gyakorlatnál jelenik meg az Indítás gomb.
    * A következő gyakorlatok automatikusan elindulnak.
    */
-  $("startFirst").classList.toggle("hidden",index!==0);
+  $("startFirst").classList.toggle("invisible",index!==0);
   /*
    * A Következő minden gyakorlatnál ugyanúgy létezik.
    * Normál módban a célidő lejárta után jelenik meg,
    * debug módban már indulás után használható.
    */
-  $("next").classList.add("hidden");
+  $("next").classList.add("invisible");
 }
 
 /*
@@ -465,7 +465,7 @@ function startWorkoutTimer(){
    * kivéve auto_kovetkezo=true esetén, amikor nincs szükség rá.
    */
   if(appConfig.debug && !workout.auto_kovetkezo){
-    $("next").classList.remove("hidden");
+    $("next").classList.remove("invisible");
   }
 
   intervalId=setInterval(tick,1000);
@@ -494,13 +494,13 @@ function tick(){
   if(elapsed>=target){
     $("timer").classList.add("overtime");
     $("timer").textContent="+"+formatTime(elapsed-target);
-    $("next").classList.remove("hidden");
+    $("next").classList.remove("invisible");
   }else{
     $("timer").textContent=formatTime(target-elapsed);
   }
 
   if(appConfig.debug && !workout.auto_kovetkezo && running){
-    $("next").classList.remove("hidden");
+    $("next").classList.remove("invisible");
   }
 }
 
