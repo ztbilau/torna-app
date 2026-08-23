@@ -77,12 +77,15 @@ Jelenleg:
 
 ```json
 {
-  "debug": true
+  "debug": true,
+  "time_override": 0
 }
 ```
 
 - `debug: true`: a második gyakorlattól a **Következő** gomb az idő letelte előtt is látható.
 - `debug: false`: normál módban a **Következő** csak az adott gyakorlat célidejének letelte után jelenik meg.
+- `time_override: 0`: minden gyakorlat a saját `hosszMasodperc` értékét használja.
+- `time_override: 10`: minden gyakorlat 10 másodpercig tart, függetlenül a torna JSON-ban megadott időtől. A pozitív egész érték másodpercben értendő.
 
 Az első gyakorlatnál a **Következő** gomb mindig rejtve van; ott kizárólag az **Indítás** gomb jelenik meg.
 

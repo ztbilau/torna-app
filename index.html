@@ -198,7 +198,8 @@ const CONFIG_JSON = "config.json";
 
 const LOCAL_CONFIG_FALLBACK = {
   debug: true,
-  enable_result_upload: true
+  enable_result_upload: true,
+  time_override: 0
 };
 
 const LOCAL_PERSONS_FALLBACK = {
@@ -277,6 +278,10 @@ async function loadConfig(){
     appConfig=await r.json();
     if(typeof appConfig.debug!=="boolean")appConfig.debug=false;
     if(typeof appConfig.enable_result_upload!=="boolean")appConfig.enable_result_upload=true;
+    if(!Number.isFinite(appConfig.time_override)||appConfig.time_override<0){
+      appConfig.time_override=0;
+    }
+    appConfig.time_override=Math.floor(appConfig.time_override);
   }catch(e){
     console.error("config.json betöltési hiba:",e);
     appConfig={...LOCAL_CONFIG_FALLBACK};
@@ -357,7 +362,10 @@ function restoreWorkoutSelection(){
   if([...select.options].some(o=>o.value===saved))select.value=saved;
   else select.selectedIndex=0;
   currentWorkoutId=select.value;
-  $("loadStatus").textContent=appConfig.debug?"Debug mód aktív":"";
+  const notices=[];
+  if(appConfig.debug)notices.push("Debug mód aktív");
+  if(appConfig.time_override!==0)notices.push(`Időfelülírás aktív: ${appConfig.time_override} mp/gyakorlat`);
+  $("loadStatus").textContent=notices.join(" · ");
 }
 
 $("person").addEventListener("change",()=>{
@@ -390,13 +398,19 @@ function requestGPS(){
   );
 }
 
+function getExerciseDuration(exercise){
+  return appConfig.time_override!==0
+    ? appConfig.time_override
+    : Number(exercise.hosszMasodperc);
+}
+
 function renderExercise(){
   const e=workout.feladatok[index];
 
   $("step").textContent=`${index+1} / ${workout.feladatok.length}`;
   $("title").textContent=e.nev;
   $("description").textContent=e.leiras||"";
-  $("timer").textContent=formatTime(e.hosszMasodperc);
+  $("timer").textContent=formatTime(getExerciseDuration(e));
   $("timer").classList.remove("overtime");
   $("progress").style.width=((index/workout.feladatok.length)*100)+"%";
 
@@ -453,9 +467,10 @@ function startWorkoutTimer(){
   /*
    * Debug módban azonnal lehet továbblépni.
    * Normál módban a Következő csak a célidő után jelenik meg,
-   * kivéve auto_kovetkezo=true esetén, amikor nincs szükség rá.
+   * Az automatikus továbblépésű feladatoknál is megjelenik,
+   * így szükség esetén kézzel is továbbléphető.
    */
-  if(appConfig.debug && !workout.auto_kovetkezo){
+  if(appConfig.debug){
     $("next").classList.remove("invisible");
   }
 
@@ -466,20 +481,25 @@ function tick(){
   elapsed++;
 
   const exercise = workout.feladatok[index];
-  const target = Number(exercise.hosszMasodperc);
+  const target = getExerciseDuration(exercise);
   const autoNext = exercise.automatikus_kovetkezo === true;
 
   if(elapsed === target){
     beep();
+
+    /* A célidőnél minden feladatnál felajánljuk a kézi továbblépést. */
+    $("next").classList.remove("invisible");
 
     /*
      * Minden gyakorlat saját automatikus_kovetkezo értékét használja.
      * Hiányzó mező = false.
      */
     if(autoNext){
+      const completedIndex=index;
       setTimeout(()=>{
-        if(running) nextExercise(true);
-      },300);
+        /* Kézi továbblépés után már ne váltson át még egy feladatot. */
+        if(running && index===completedIndex && elapsed>=target)nextExercise(true);
+      },1500);
       return;
     }
   }
@@ -496,14 +516,14 @@ function tick(){
    * Debug módban az automatikus továbblépésre állított feladat
    * kivételével bármikor használható a Következő.
    */
-  if(appConfig.debug && !autoNext && running){
+  if(appConfig.debug && running){
     $("next").classList.remove("invisible");
   }
 }
 
 function nextExercise(auto=false){
   const exercise = workout.feladatok[index];
-  const target = Number(exercise.hosszMasodperc);
+  const target = getExerciseDuration(exercise);
   const autoNext = exercise.automatikus_kovetkezo === true;
 
   /* Automatikus továbblépés csak explicit true esetén engedélyezett. */
@@ -666,7 +686,8 @@ $("backToMain").addEventListener("click",showMain);
 $("uploadResultJson").addEventListener("click",uploadResultJson);
 $("downloadResultsConfig").addEventListener("click",downloadAllResults);
 $("startFirst").addEventListener("click",startWorkoutTimer);
-$("next").addEventListener("click",nextExercise);
+/* A click esemény nem azonos az auto=true paraméterrel. */
+$("next").addEventListener("click",()=>nextExercise(false));
 
 $("again").addEventListener("click",()=>{
   $("stats").classList.add("hidden");

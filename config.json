@@ -1,4 +1,5 @@
 {
   "debug": true,
-  "enable_result_upload": false
+  "enable_result_upload": false,
+  "time_override": 0
 }
