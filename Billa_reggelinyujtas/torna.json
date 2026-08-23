@@ -16,16 +16,28 @@
       "leiras": "Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!"
     },
     {
-      "nev": "Csípőhorpasz Nyújtás (Bal)",
-      "hosszMasodperc": 30,
-      "kep": "csipohorpasz.jpg",
-      "leiras": "Féltérden (bal láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"
+      "nev": "Csípőkörzés (Bal)",
+      "hosszMasodperc": 20,
+      "kep": "csipokorzes.jpg",
+      "leiras": "Álló helyzetben emeld fel a bal térded, és írj le vele minél nagyobb köröket kifelé, megnyitva a csípőízületet."
     },
     {
-      "nev": "Csípőhorpasz Nyújtás (Jobb)",
+      "nev": "Csípőkörzés (Jobb)",
+      "hosszMasodperc": 20,
+      "kep": "csipokorzes.jpg",
+      "leiras": "Álló helyzetben emeld fel a jobb térded, és írj le vele minél nagyobb köröket kifelé, megnyitva a csípőízületet."
+    },
+    {
+      "nev": "Fókuszált Combnyújtás (Bal)",
       "hosszMasodperc": 30,
-      "kep": "csipohorpasz.jpg",
-      "leiras": "Féltérden (jobb láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"
+      "kep": "combnyujtas.jpg",
+      "leiras": "Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
+    },
+    {
+      "nev": "Fókuszált Combnyújtás (Jobb)",
+      "hosszMasodperc": 30,
+      "kep": "combnyujtas.jpg",
+      "leiras": "Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
     },
     {
       "nev": "Combhajlító Nyújtás (Bal)",
@@ -40,16 +52,16 @@
       "leiras": "Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."
     },
     {
-      "nev": "Fókuszált Combnyújtás (Bal)",
+      "nev": "Hokedlis Combnyújtás (Bal)",
       "hosszMasodperc": 30,
-      "kep": "combnyujtas.jpg",
-      "leiras": "Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
+      "kep": "hokedlis_combnyujtas.jpg",
+      "leiras": "A bal térd a földön (matracon) támaszkodik, miközben a bal lábfej hátul egy hokedlin vagy alacsony emelvényen pihen. Told előre finoman a medencéd, és nyújtsd ki az ellentétes (jobb) karod előre."
     },
     {
-      "nev": "Fókuszált Combnyújtás (Jobb)",
+      "nev": "Hokedlis Combnyújtás (Jobb)",
       "hosszMasodperc": 30,
-      "kep": "combnyujtas.jpg",
-      "leiras": "Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
+      "kep": "hokedlis_combnyujtas.jpg",
+      "leiras": "A jobb térd a földön (matracon) támaszkodik, miközben a jobb lábfej hátul egy hokedlin vagy alacsony emelvényen pihen. Told előre finoman a medencéd, és nyújtsd ki az ellentétes (bal) karod előre."
     },
     {
       "nev": "Macska-tehén Átmozgatás",
