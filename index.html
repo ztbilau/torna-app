@@ -1,35 +1,59 @@
 <!doctype html>
 <html lang="hu">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4263eb">
 <link rel="icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4263eb">
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Torna App by Billa</title>
 <style>
-:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#667085;--accent:#4263eb;--danger:#d92d20;--border:#e4e7ec}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-.app{width:min(1050px,100%);margin:auto;padding:18px}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-h1{margin:0;font-size:clamp(1.6rem,4vw,2.4rem)}h2{margin:0 0 10px}.muted{color:var(--muted)}
+:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#667085;--accent:#4263eb;--accent2:#eef2ff;--danger:#d92d20;--border:#e4e7ec;--success:#067647}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{width:min(1050px,100%);margin:auto;padding:18px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+h1{margin:0;font-size:clamp(1.6rem,4vw,2.4rem)}
+h2{margin:0 0 10px}h3{margin:20px 0 8px}
+.muted{color:var(--muted)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:22px;box-shadow:0 12px 35px rgba(16,24,40,.08);overflow:hidden;margin-bottom:16px}
-.setup,.stats,.guide{padding:24px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}label{font-weight:700;font-size:.9rem;display:block;margin-bottom:6px}
-input,select{width:100%;padding:12px;border:1px solid #d0d5dd;border-radius:11px;font:inherit;background:#fff}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
-button{border:0;border-radius:12px;padding:12px 17px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--accent);color:#fff}.secondary{background:#eef2ff;color:#3046a8}.link{background:none;color:var(--accent);padding:8px}
+.setup,.stats,.configuration{padding:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+label{font-weight:700;font-size:.9rem;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #d0d5dd;border-radius:11px;font:inherit;background:#fff}
+textarea{min-height:150px;resize:vertical}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+button{border:0;border-radius:12px;padding:12px 17px;font:inherit;font-weight:700;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.primary{background:var(--accent);color:#fff}.secondary{background:var(--accent2);color:#3046a8}
+.link{background:none;color:var(--accent);padding:8px}
+.back{background:var(--accent2);color:#3046a8}
 .progressbar{height:8px;background:#edf0f5}.progress{height:100%;background:linear-gradient(90deg,#4263eb,#6c5ce7);width:0}
-.content{display:grid;grid-template-columns:1fr 1fr;gap:25px;padding:25px}.exercise-image{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:17px;border:1px solid var(--border)}
-.info{display:flex;flex-direction:column;justify-content:center}.step{color:var(--accent);font-weight:700}.title{font-size:clamp(1.4rem,4vw,2.1rem);margin:7px 0 10px}.description{color:var(--muted);line-height:1.55}
-.timer{font-variant-numeric:tabular-nums;font-size:clamp(4rem,12vw,7rem);font-weight:800;letter-spacing:-4px;line-height:1;margin:8px 0 18px}.overtime{color:var(--danger)}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}.stat{padding:20px;border:1px solid var(--border);border-radius:16px}.number{font-size:2.7rem;font-weight:800;color:var(--accent)}
-pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-radius:12px;overflow:auto;font-size:.85rem}.notice{padding:12px;border-radius:10px;background:#fff7e6;color:#8a5b00}.hidden{display:none!important}
+.content{display:grid;grid-template-columns:1fr 1fr;gap:25px;padding:25px}
+.exercise-image{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:17px;border:1px solid var(--border)}
+.info{display:flex;flex-direction:column;justify-content:center}
+.step{color:var(--accent);font-weight:700}.title{font-size:clamp(1.4rem,4vw,2.1rem);margin:7px 0 10px}
+.description{color:var(--muted);line-height:1.55}
+.timer{font-variant-numeric:tabular-nums;font-size:clamp(4rem,12vw,7rem);font-weight:800;letter-spacing:-4px;line-height:1;margin:8px 0 18px}
+.overtime{color:var(--danger)}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.stat{padding:20px;border:1px solid var(--border);border-radius:16px}.number{font-size:2.7rem;font-weight:800;color:var(--accent)}
+pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-radius:12px;overflow:auto;font-size:.85rem}
+.notice,.error,.success{padding:12px;border-radius:10px;margin-top:15px}
+.notice{background:#fff7e6;color:#8a5b00}.error{background:#fef3f2;color:#b42318}.success{background:#ecfdf3;color:var(--success)}
+.hidden{display:none!important}.config-section{border-top:1px solid var(--border);padding-top:22px;margin-top:22px}
+.small{font-size:.88rem}code{background:#f2f4f7;padding:2px 5px;border-radius:5px}
 @media(max-width:720px){.header{align-items:flex-start}.grid,.content,.stat-grid{grid-template-columns:1fr}.content{padding:18px}.info{order:-1}}
 </style>
 </head>
 <body>
 <div class="app">
+
+<div id="mainPage">
 <header class="header">
   <div><h1>Torna App by Billa</h1><div class="muted" id="subtitle"></div></div>
-  <button class="link" id="guideBtn">Torna leíró JSON készítése</button>
+  <button class="link" id="configurationBtn">Configuration</button>
 </header>
 
 <section class="card setup" id="setup">
@@ -45,11 +69,16 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
 <section class="card hidden" id="workout">
   <div class="progressbar"><div class="progress" id="progress"></div></div>
   <div class="content">
-    <img id="image" class="exercise-image" alt="">
+    <img id="image" class="exercise-image" alt="Gyakorlat képe">
     <div class="info">
-      <div class="step" id="step"></div><h2 class="title" id="title"></h2><p class="description" id="description"></p>
+      <div class="step" id="step"></div>
+      <h2 class="title" id="title"></h2>
+      <p class="description" id="description"></p>
       <div class="timer" id="timer">00:30</div>
-      <div class="actions"><button class="secondary" id="pause">Indítás</button><button class="primary" id="next">Következő</button></div>
+      <div class="actions">
+        <button class="secondary" id="startFirst">Indítás</button>
+        <button class="primary hidden" id="next">Következő</button>
+      </div>
     </div>
   </div>
 </section>
@@ -61,57 +90,149 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
     <div class="stat"><div class="number" id="month">0</div><div class="muted">rutin ebben a hónapban</div></div>
   </div>
   <p class="notice" id="gps"></p>
-  <div class="actions"><button class="primary" id="download">Adatok letöltése (JSON)</button><button class="secondary" id="again">Másik torna</button></div>
+  <div class="actions">
+    <button class="secondary" id="again">Másik torna</button>
+  </div>
 </section>
+</div>
 
-<section class="card guide hidden" id="guide">
-  <h2>Torna leíró JSON készítése</h2>
-  <p>Hozz létre egy új almappát az <code>index.html</code> mellett, például <code>Billa_Torna2</code> néven. Tegyél bele egy <code>torna.json</code> fájlt és a képeket.</p>
-  <p>A JSON szerkezete:</p><pre id="example"></pre>
-  <p>Az új mappát az <code>index.html</code> tetején a <code>WORKOUTS</code> listához is hozzá kell adni.</p>
-  <pre>{ id: "Billa_Torna2", json: "Billa_Torna2/torna.json" }</pre>
-  <p class="muted">A képfájlok a torna saját mappájában legyenek; a gyökérkönyvtárba nem kell őket bemásolni.</p>
-  <button class="secondary" id="closeGuide">Bezárás</button>
+<div id="configurationPage" class="hidden">
+<header class="header">
+  <div><h1>Configuration</h1><div class="muted">Torna App by Billa</div></div>
+  <button class="back" id="backToMain">← Vissza</button>
+</header>
+
+<section class="card configuration">
+<h2>Torna leíró JSON készítése</h2>
+<p>Új torna esetén hozz létre egy almappát az <code>index.html</code> mellett. Az almappába kerüljön a <code>torna.json</code> és minden, a tornához tartozó kép.</p>
+<pre>torna-app/
+├── index.html
+├── config.json
+├── szemelyek.json
+└── Billa_reggelinyujtas/
+    ├── torna.json
+    ├── torzscsavaras.jpg
+    ├── mellkasnyitas.jpg
+    └── ...</pre>
+
+<h3>A torna JSON szerkezete</h3>
+<pre>{
+  "tornaId": "Billa_reggelinyujtas",
+  "tornaReszletesNeve": "5 perces reggeli nyújtás",
+  "auto_kovetkezo": false,
+  "feladatok": [
+    {
+      "nev": "Dinamikus Törzscsavarás",
+      "hosszMasodperc": 30,
+      "kep": "torzscsavaras.jpg",
+      "leiras": "..."
+    }
+  ]
+}</pre>
+<p class="muted small">A <code>kep</code> mezőben a torna mappájában található fájl neve szerepeljen. A képeket nem kell a gyökérbe másolni.</p>
+
+
+<div class="config-section">
+<h2>Edzésnapló letöltése</h2>
+<p>Az alábbi gomb a böngészőben tárolt <strong>teljes edzésnaplót</strong> letölti,
+tehát minden személy minden rögzített edzését tartalmazza.</p>
+<div class="actions">
+  <button class="primary" id="downloadResultsConfig">Teljes edzésnapló letöltése (JSON)</button>
+</div>
+<p class="muted small">A fájl neve: <code>edzesnaplo.json</code>.</p>
+</div>
+
+<div class="config-section">
+<h2>JSON feltöltés</h2>
+<p id="uploadDisabledMessage" class="notice hidden">A JSON feltöltés a config.json alapján le van tiltva.</p>
+<div id="uploadSection">
+<p>A korábban letöltött <code>edzesnaplo.json</code> fájl tartalmát vissza lehet tölteni a böngésző helyi edzésnaplójába.</p>
+<p class="muted small">Ez a művelet nem küld adatot szerverre. A fájl tartalma a böngésző <code>localStorage</code>-ába kerül.</p>
+<input type="file" id="resultJsonFile" accept=".json,application/json">
+<div class="actions"><button class="primary" id="uploadResultJson">JSON feltöltése</button></div>
+<div id="uploadMessage"></div>
+</div>
+</div>
+
+<div class="config-section">
+<h2>Aktuális konfiguráció</h2>
+<pre id="configDisplay"></pre>
+</div>
+
 </section>
+</div>
 </div>
 
 <script>
 /*
- * Több-tornás alkalmazás.
- * A torna szerkezetét külön JSON írja le.
- * A személy, az utoljára választott torna és az edzésnapló localStorage-ban marad.
+ * Több-tornás Torna App.
+ *
+ * Fő konfiguráció:
+ *   config.json
+ *
+ * A torna leírása:
+ *   <torna-mappa>/torna.json
+ *
+ * A személyek:
+ *   szemelyek.json
+ *
+ * Az edzésnapló:
+ *   localStorage
+ *
+ * Az enable_result_upload kapcsoló a Configuration oldalon
+ * engedélyezi/tiltja az edzesnaplo.json importját.
  */
 
-// Új torna hozzáadásához itt kell felvenni a mappát és a JSON fájlt.
-const WORKOUTS=[
+const WORKOUTS = [
   {id:"Billa_reggelinyujtas",json:"Billa_reggelinyujtas/torna.json"},
   {id:"Kriszta_reggelitorna",json:"Kriszta_reggelitorna/torna.json"}
 ];
 
-// Helyi file:// használatkor a torna JSON fallbackként is elérhető.
-const LOCAL_JSON_FALLBACKS={
-  "Billa_reggelinyujtas": {"tornaId": "Billa_reggelinyujtas", "tornaReszletesNeve": "5 perces reggeli nyújtás", "feladatok": [{"nev": "Dinamikus Törzscsavarás", "hosszMasodperc": 30, "kep": "torzscsavaras.jpg", "leiras": "Állj vállszéles terpeszbe, laza törzscsavarások mindkét irányba, a karok szabadon lengenek."}, {"nev": "Mellkasnyitás", "hosszMasodperc": 30, "kep": "mellkasnyitas.jpg", "leiras": "Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!"}, {"nev": "Csípőhorpasz Nyújtás (Bal)", "hosszMasodperc": 30, "kep": "csipohorpasz.jpg", "leiras": "Féltérden (bal láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"}, {"nev": "Csípőhorpasz Nyújtás (Jobb)", "hosszMasodperc": 30, "kep": "csipohorpasz.jpg", "leiras": "Féltérden (jobb láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"}, {"nev": "Combhajlító Nyújtás (Bal)", "hosszMasodperc": 30, "kep": "combhajlito.jpg", "leiras": "Bal láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."}, {"nev": "Combhajlító Nyújtás (Jobb)", "hosszMasodperc": 30, "kep": "combhajlito.jpg", "leiras": "Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."}, {"nev": "Fókuszált Combnyújtás (Bal)", "hosszMasodperc": 30, "kep": "combnyujtas.jpg", "leiras": "Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"}, {"nev": "Fókuszált Combnyújtás (Jobb)", "hosszMasodperc": 30, "kep": "combnyujtas.jpg", "leiras": "Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"}, {"nev": "Macska-tehén Átmozgatás", "hosszMasodperc": 60, "kep": "macska-tehen.jpg", "leiras": "Négykézláb. Lassan gömbölyítsd a hátad a plafon felé, majd óvatosan homoríts lefelé."}]}
+const PERSONS_JSON = "szemelyek.json";
+const CONFIG_JSON = "config.json";
+
+const LOCAL_CONFIG_FALLBACK = {
+  debug: true,
+  enable_result_upload: true
 };
 
-// A személyek listája külön JSON-ból érkezik.
-const PERSONS_JSON="szemelyek.json";
-const CONFIG_JSON="config.json";
-const LOCAL_CONFIG_FALLBACK={debug:true};
-let appConfig={debug:false};
-const LOCAL_PERSONS_FALLBACK={
-  "szemelyek":[{"nev":"Billa","alapertelmezettTorna":"Billa_reggelinyujtas"}]
+const LOCAL_PERSONS_FALLBACK = {
+  szemelyek: [
+    {nev:"Billa",alapertelmezettTorna:"Billa_reggelinyujtas"}
+  ]
 };
-const LOG_KEY="reggeliNyujtasNaplo";
-const PERSON_KEY="reggeliNyujtasSzemely";
-const WORKOUT_KEY="reggeliNyujtasTorna";
-const PERSON_WORKOUT_PREFIX="reggeliNyujtasTorna_";
 
-let workout=null,currentWorkout=null,currentPerson="";
+/* file:// módban a jelenlegi Billa torna továbbra is működjön. */
+const LOCAL_JSON_FALLBACKS = {
+  Billa_reggelinyujtas: {
+    tornaId:"Billa_reggelinyujtas",
+    tornaReszletesNeve:"5 perces reggeli nyújtás",
+    feladatok:[
+      {nev:"Dinamikus Törzscsavarás",hosszMasodperc:30,kep:"torzscsavaras.jpg",leiras:"Állj vállszéles terpeszbe, laza törzscsavarások mindkét irányba, a karok szabadon lengenek."},
+      {nev:"Mellkasnyitás",hosszMasodperc:30,kep:"mellkasnyitas.jpg",leiras:"Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!"},
+      {nev:"Csípőhorpasz Nyújtás (Bal)",hosszMasodperc:30,kep:"csipohorpasz.jpg",leiras:"Féltérden (bal láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"},
+      {nev:"Csípőhorpasz Nyújtás (Jobb)",hosszMasodperc:30,kep:"csipohorpasz.jpg",leiras:"Féltérden (jobb láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"},
+      {nev:"Combhajlító Nyújtás (Bal)",hosszMasodperc:30,kep:"combhajlito.jpg",leiras:"Bal láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."},
+      {nev:"Combhajlító Nyújtás (Jobb)",hosszMasodperc:30,kep:"combhajlito.jpg",leiras:"Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."},
+      {nev:"Fókuszált Combnyújtás (Bal)",hosszMasodperc:30,kep:"combnyujtas.jpg",leiras:"Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"},
+      {nev:"Fókuszált Combnyújtás (Jobb)",hosszMasodperc:30,kep:"combnyujtas.jpg",leiras:"Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"},
+      {nev:"Macska-tehén Átmozgatás",hosszMasodperc:60,kep:"macska-tehen.jpg",leiras:"Négykézláb. Lassan gömbölyítsd a hátad a plafon felé, majd óvatosan homoríts lefelé."}
+    ]
+  }
+};
+
+let appConfig={...LOCAL_CONFIG_FALLBACK};
 let persons=[];
+let workout=null,currentPerson="",currentWorkoutId="";
 let index=0,elapsed=0,running=false,intervalId=null,audioContext=null;
 let workoutStartTime=null,workoutEndTime=null,completionRecorded=false;
 let latitude=null,longitude=null,gpsStatus="A GPS-helyadat még nincs lekérve.";
 
+
+const LOG_KEY="reggeliNyujtasNaplo";
+const PERSON_KEY="reggeliNyujtasSzemely";
+const WORKOUT_KEY="reggeliNyujtasTorna";
+const PERSON_WORKOUT_PREFIX="reggeliNyujtasTorna_";
 const $=id=>document.getElementById(id);
 
 function formatTime(sec){
@@ -119,304 +240,348 @@ function formatTime(sec){
   return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
 }
 
-// A böngésző AudioContext API-jával adunk egy rövid csippanást.
-function beep() {
-  try {
-    // AudioContext létrehozása első használatkor
-    if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+/* TÍ - TÍ - TÍ - TÍÍÍ! figyelemfelkeltő hangjelzés. */
+function beep(){
+  try{
+    if(!audioContext){
+      audioContext=new(window.AudioContext||window.webkitAudioContext)();
     }
-
-    // Mobil böngészőkben szükséges lehet az AudioContext felébresztése
     audioContext.resume();
-
-    const now = audioContext.currentTime;
-
-    /*
-     * Figyelemfelkeltő timer-hang:
-     *
-     * TÍ - TÍ - TÍ - TÍÍÍ!
-     *
-     * Az első három rövid és fokozatosan magasabb,
-     * az utolsó hosszabb és a legmagasabb.
-     */
-    const tones = [
-      { start: 0.00, duration: 0.11, frequency: 880,  volume: 0.65 },
-      { start: 0.16, duration: 0.11, frequency: 1046, volume: 0.70 },
-      { start: 0.32, duration: 0.11, frequency: 1318, volume: 0.75 },
-      { start: 0.48, duration: 0.32, frequency: 1568, volume: 0.85 }
+    const now=audioContext.currentTime;
+    const tones=[
+      {start:0.00,duration:0.11,frequency:880,volume:0.65},
+      {start:0.16,duration:0.11,frequency:1046,volume:0.70},
+      {start:0.32,duration:0.11,frequency:1318,volume:0.75},
+      {start:0.48,duration:0.32,frequency:1568,volume:0.85}
     ];
-
-    tones.forEach(tone => {
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-
-      // A square hullám karakteresebb és jobban hallható,
-      // mint a korábbi sine hullám.
-      oscillator.type = "square";
-      oscillator.frequency.value = tone.frequency;
-
-      const start = now + tone.start;
-      const end = start + tone.duration;
-
-      // Rövid fel- és lefutás, hogy ne kattogjon a hang.
-      gain.gain.setValueAtTime(0.0001, start);
-
-      gain.gain.exponentialRampToValueAtTime(
-        tone.volume,
-        start + 0.015
-      );
-
-      gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        end
-      );
-
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-
-      oscillator.start(start);
-      oscillator.stop(end);
+    tones.forEach(t=>{
+      const osc=audioContext.createOscillator();
+      const gain=audioContext.createGain();
+      osc.type="square";
+      osc.frequency.value=t.frequency;
+      const start=now+t.start,end=start+t.duration;
+      gain.gain.setValueAtTime(0.0001,start);
+      gain.gain.exponentialRampToValueAtTime(t.volume,start+0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001,end);
+      osc.connect(gain);gain.connect(audioContext.destination);
+      osc.start(start);osc.stop(end);
     });
-
-  } catch (e) {
-    console.warn("Hanghiba:", e);
-  }
+  }catch(e){console.warn("Hanghiba:",e);}
 }
 
-function getLog(){try{return JSON.parse(localStorage.getItem(LOG_KEY)||"[]")}catch(e){return[]}}
-function saveLog(log){localStorage.setItem(LOG_KEY,JSON.stringify(log))}
-
-/*
- * GPS: az első gyakorlat első tényleges Indításakor kérjük le.
- * Ha a webhelynek már van helyengedélye, a böngésző nem feltétlenül kérdez rá újra.
- */
-function requestGPS(){
-  if(!navigator.geolocation){gpsStatus="A böngésző nem támogatja a GPS-t.";return}
-  gpsStatus="GPS-helymeghatározás folyamatban...";
-  navigator.geolocation.getCurrentPosition(
-    p=>{latitude=p.coords.latitude;longitude=p.coords.longitude;gpsStatus=`GPS rögzítve: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`},
-    ()=>{gpsStatus="A GPS nem érhető el vagy nincs engedélyezve."},
-    {enableHighAccuracy:true,timeout:10000,maximumAge:0}
-  );
+function getLog(){
+  try{return JSON.parse(localStorage.getItem(LOG_KEY)||"[]");}
+  catch(e){return[];}
 }
+function saveLog(log){localStorage.setItem(LOG_KEY,JSON.stringify(log));}
 
-// A statikus oldal nem tudja automatikusan felsorolni a könyvtárakat,
-// ezért az új tornák a WORKOUTS konfigurációból jelennek meg.
 async function loadConfig(){
-  /*
-   * A config.json központi alkalmazásbeállítás.
-   * GitHub Pages / HTTPS alatt a valódi fájlt töltjük be.
-   * Helyi file:// megnyitásnál a böngésző korlátozhatja a fetch-et,
-   * ezért a jelenlegi alapértelmezésből indulunk.
-   */
   if(location.protocol==="file:"){
     appConfig={...LOCAL_CONFIG_FALLBACK};
     return;
   }
-
   try{
-    const response=await fetch(CONFIG_JSON,{cache:"no-store"});
-    if(!response.ok)throw new Error("HTTP "+response.status);
-    appConfig=await response.json();
-  }catch(error){
-    console.error("config.json betöltési hiba:",error);
+    const r=await fetch(CONFIG_JSON+"?v="+Date.now(),{cache:"no-store"});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    appConfig=await r.json();
+    if(typeof appConfig.debug!=="boolean")appConfig.debug=false;
+    if(typeof appConfig.enable_result_upload!=="boolean")appConfig.enable_result_upload=true;
+  }catch(e){
+    console.error("config.json betöltési hiba:",e);
     appConfig={...LOCAL_CONFIG_FALLBACK};
   }
 }
 
 async function loadPersons(){
-  let data=null;
-
-  // Helyi használatnál nem fetch-elünk, mert file:// alatt ezt a böngésző blokkolhatja.
-  if(location.protocol==="file:"){
-    data=LOCAL_PERSONS_FALLBACK;
-  }else{
-    try{
-      const response=await fetch(PERSONS_JSON,{cache:"no-store"});
-      if(!response.ok)throw new Error("HTTP "+response.status);
-      data=await response.json();
-    }catch(error){
-      console.error("Személyek JSON betöltési hiba:",error);
-      $("loadStatus").textContent="A személyek listája nem tölthető be.";
+  try{
+    if(location.protocol==="file:"){
+      persons=LOCAL_PERSONS_FALLBACK.szemelyek;
       return;
     }
+    const r=await fetch(PERSONS_JSON+"?v="+Date.now(),{cache:"no-store"});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    const data=await r.json();
+    persons=Array.isArray(data.szemelyek)?data.szemelyek:[];
+  }catch(e){
+    console.error("szemelyek.json betöltési hiba:",e);
+    persons=LOCAL_PERSONS_FALLBACK.szemelyek;
   }
+}
 
-  persons=data.szemelyek||[];
-  const select=$("person");
-  select.innerHTML="";
-
-  persons.forEach(person=>{
-    const option=document.createElement("option");
-    option.value=person.nev;
-    option.textContent=person.nev;
-    select.appendChild(option);
-  });
-
-  const saved=localStorage.getItem(PERSON_KEY);
-  if(saved && persons.some(p=>p.nev===saved)){
-    select.value=saved;
-  }else if(persons.length){
-    select.value=persons[0].nev;
+async function loadWorkoutJson(item){
+  if(location.protocol==="file:"&&LOCAL_JSON_FALLBACKS[item.id]){
+    return LOCAL_JSON_FALLBACKS[item.id];
   }
+  const r=await fetch(item.json+"?v="+Date.now(),{cache:"no-store"});
+  if(!r.ok)throw new Error(item.json+" → HTTP "+r.status);
+  return await r.json();
 }
 
 async function loadWorkoutOptions(){
   const select=$("workoutSelect");
   select.innerHTML="";
-
   for(const item of WORKOUTS){
-    let data=null;
-    if(location.protocol==="file:" && LOCAL_JSON_FALLBACKS[item.id]){
-      data=LOCAL_JSON_FALLBACKS[item.id];
-    }else{
-      try{
-        const response=await fetch(item.json,{cache:"no-store"});
-        if(!response.ok)throw new Error("HTTP "+response.status);
-        data=await response.json();
-      }catch(error){
-        console.error("Torna JSON betöltési hiba:",item.id,error);
-        continue;
-      }
+    try{
+      const data=await loadWorkoutJson(item);
+      const option=document.createElement("option");
+      option.value=item.id;
+      option.textContent=data.tornaReszletesNeve||item.id;
+      select.appendChild(option);
+    }catch(e){
+      console.error("Torna nem tölthető be:",item.id,e);
     }
-
-    const option=document.createElement("option");
-    option.value=item.id;
-    option.textContent=data.tornaReszletesNeve||item.id;
-    select.appendChild(option);
   }
+  restoreWorkoutSelection();
 }
-async function loadWorkout(id){
-  const config=WORKOUTS.find(x=>x.id===id);
-  if(!config)throw new Error("Ismeretlen torna");
 
-  if(location.protocol==="file:" && LOCAL_JSON_FALLBACKS[id]){
-    workout=LOCAL_JSON_FALLBACKS[id];
-  }else{
-    const response=await fetch(config.json,{cache:"no-store"});
-    if(!response.ok){
-      throw new Error("A torna leíró nem tölthető be ("+response.status+").");
-    }
-    workout=await response.json();
+function populatePersons(){
+  const select=$("person");
+  select.innerHTML="";
+  persons.forEach(p=>{
+    const o=document.createElement("option");
+    o.value=p.nev;o.textContent=p.nev;select.appendChild(o);
+  });
+  const saved=localStorage.getItem(PERSON_KEY);
+  if(saved&&persons.some(p=>p.nev===saved))select.value=saved;
+  else if(persons.length)select.value=persons[0].nev;
+  currentPerson=select.value;
+}
+
+function getPersonDefaultWorkout(name){
+  const p=persons.find(x=>x.nev===name);
+  if(!p)return WORKOUTS[0]?.id||"";
+  return localStorage.getItem(PERSON_WORKOUT_PREFIX+name)||
+         p.alapertelmezettTorna||
+         localStorage.getItem(WORKOUT_KEY)||
+         WORKOUTS[0]?.id||"";
+}
+
+function restoreWorkoutSelection(){
+  const select=$("workoutSelect");
+  if(!select.options.length){
+    $("loadStatus").textContent="Nem sikerült tornát betölteni.";
+    return;
   }
+  const saved=getPersonDefaultWorkout($("person").value);
+  if([...select.options].some(o=>o.value===saved))select.value=saved;
+  else select.selectedIndex=0;
+  currentWorkoutId=select.value;
+  $("loadStatus").textContent=appConfig.debug?"Debug mód aktív":"";
+}
 
-  currentWorkout=config;
-  localStorage.setItem(WORKOUT_KEY,id);
-  $("subtitle").textContent=workout.tornaReszletesNeve||id;
-  if(appConfig.debug) $("loadStatus").textContent="Debug mód aktív";
+$("person").addEventListener("change",()=>{
+  currentPerson=$("person").value;
+  localStorage.setItem(PERSON_KEY,currentPerson);
+  restoreWorkoutSelection();
+});
+
+$("workoutSelect").addEventListener("change",()=>{
+  currentWorkoutId=$("workoutSelect").value;
+  localStorage.setItem(WORKOUT_KEY,currentWorkoutId);
+  localStorage.setItem(PERSON_WORKOUT_PREFIX+currentPerson,currentWorkoutId);
+});
+
+function requestGPS(){
+  if(!navigator.geolocation){
+    gpsStatus="A böngésző nem támogatja a GPS-t.";return;
+  }
+  gpsStatus="GPS-helymeghatározás folyamatban...";
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      latitude=p.coords.latitude;
+      longitude=p.coords.longitude;
+      gpsStatus=`GPS rögzítve: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+    },
+    ()=>{
+      gpsStatus="A GPS nem érhető el vagy nincs engedélyezve.";
+    },
+    {enableHighAccuracy:true,timeout:10000,maximumAge:0}
+  );
 }
 
 function renderExercise(){
-  const ex=workout.feladatok[index];
-  $("step").textContent=`${index+1} / ${workout.feladatok.length}`;
-  $("title").textContent=ex.nev;$("description").textContent=ex.leiras||"";
-  $("image").src=currentWorkout.id+"/"+ex.kep;$("image").alt=ex.nev;
-  $("progress").style.width=(index/workout.feladatok.length*100)+"%";
-  elapsed=0;running=false;$("timer").classList.remove("overtime");$("timer").textContent=formatTime(ex.hosszMasodperc);
-  $("pause").textContent="Indítás";
-  // Az első gyakorlat indulás előtt csak az Indítás gombot mutatja.
-  $("pause").classList.toggle("hidden",index!==0);
+  const e=workout.feladatok[index];
 
-  // Az első gyakorlatnál indulás előtt a Következő rejtett.
-  // Debug módban az első gyakorlat tényleges elindítása után megjelenik.
-  // Normál módban csak a célidő letelte után jelenik meg.
+  $("step").textContent=`${index+1} / ${workout.feladatok.length}`;
+  $("title").textContent=e.nev;
+  $("description").textContent=e.leiras||"";
+  $("timer").textContent=formatTime(e.hosszMasodperc);
+  $("timer").classList.remove("overtime");
+  $("progress").style.width=((index/workout.feladatok.length)*100)+"%";
+
+  const item=WORKOUTS.find(w=>w.id===currentWorkoutId);
+  if(item){
+    const slash=item.json.lastIndexOf("/");
+    const folder=slash>=0?item.json.substring(0,slash):"";
+    $("image").src=folder?folder+"/"+e.kep:e.kep;
+  }
+
+  /*
+   * Csak az első gyakorlatnál jelenik meg az Indítás gomb.
+   * A következő gyakorlatok automatikusan elindulnak.
+   */
+  $("startFirst").classList.toggle("hidden",index!==0);
+  /*
+   * A Következő minden gyakorlatnál ugyanúgy létezik.
+   * Normál módban a célidő lejárta után jelenik meg,
+   * debug módban már indulás után használható.
+   */
   $("next").classList.add("hidden");
+}
+
+/*
+ * Az első gyakorlatnál az Indítás indítja az órát.
+ * Debug módban a Következő már indulás után azonnal látható.
+ */
+function startWorkoutTimer(){
+  /*
+   * Csak az első gyakorlatnál van Indítás gomb.
+   * Szünet funkció nincs.
+   */
+  if(running) return;
+
+  if(!workoutStartTime){
+    workoutStartTime=new Date().toISOString();
+    requestGPS();
+  }
+
+  try{
+    if(!audioContext){
+      audioContext=new(window.AudioContext||window.webkitAudioContext)();
+    }
+    audioContext.resume();
+  }catch(e){}
+
+  running=true;
+
+  /*
+   * Az első gyakorlat Indítás gombja a kattintás után eltűnik.
+   */
+  $("startFirst").classList.add("hidden");
+
+  /*
+   * Debug módban azonnal lehet továbblépni.
+   * Normál módban a Következő csak a célidő után jelenik meg,
+   * kivéve auto_kovetkezo=true esetén, amikor nincs szükség rá.
+   */
+  if(appConfig.debug && !workout.auto_kovetkezo){
+    $("next").classList.remove("hidden");
+  }
+
+  intervalId=setInterval(tick,1000);
 }
 
 function tick(){
   elapsed++;
+
   const target=workout.feladatok[index].hosszMasodperc;
 
-  if(elapsed===target)beep();
+  if(elapsed===target){
+    beep();
+
+    /*
+     * Ha a torna leírójában auto_kovetkezo=true,
+     * az idő lejártakor azonnal indul a következő gyakorlat.
+     */
+    if(workout.auto_kovetkezo===true){
+      setTimeout(()=>{
+        if(running) nextExercise(true);
+      },300);
+      return;
+    }
+  }
 
   if(elapsed>=target){
     $("timer").classList.add("overtime");
     $("timer").textContent="+"+formatTime(elapsed-target);
-    // Normál módban itt válik láthatóvá a Következő.
-    if(index>0) $("next").classList.remove("hidden");
+    $("next").classList.remove("hidden");
   }else{
     $("timer").textContent=formatTime(target-elapsed);
   }
 
-  // Debug módban az első gyakorlat ELINDÍTÁSA után is használható
-  // a Következő. (Indítás előtt továbbra sem látszik.)
-  if(appConfig.debug && running){
+  if(appConfig.debug && !workout.auto_kovetkezo && running){
     $("next").classList.remove("hidden");
   }
 }
 
-function startPause(){
-  try{if(!audioContext)audioContext=new(window.AudioContext||window.webkitAudioContext)();audioContext.resume()}catch(e){}
-  if(running){
-    clearInterval(intervalId);intervalId=null;running=false;$("pause").textContent="Folytatás";
-  }else{
-    if(!workoutStartTime){workoutStartTime=new Date().toISOString()}
+function nextExercise(auto=false){
+  const target=workout.feladatok[index].hosszMasodperc;
+
+  /*
+   * Manuális továbblépés:
+   * normál módban csak a célidő után engedjük,
+   * debug módban bármikor.
+   *
+   * Automatikus továbblépésnél a torna auto_kovetkezo
+   * beállítása garantálja, hogy a célidő lejárt.
+   */
+  if(!auto && !appConfig.debug && elapsed<target) return;
+
+  clearInterval(intervalId);
+  intervalId=null;
+  running=false;
+
+  if(index<workout.feladatok.length-1){
+    index++;
+    elapsed=0;
+    renderExercise();
+
+    /*
+     * A következő gyakorlat már indulhat is.
+     * Indítás gomb csak az első gyakorlaton van.
+     */
     running=true;
-    $("pause").textContent="Szünet";
-
-    // Debug módban már az első gyakorlat elindítása után azonnal
-    // engedélyezzük a továbblépést.
-    if(appConfig.debug) $("next").classList.remove("hidden");
-
     intervalId=setInterval(tick,1000);
+  }else{
+    finishWorkout();
   }
 }
 
-// A Következő azonnal elindítja a következő feladatot.
-function nextExercise(){
-  const target=workout.feladatok[index].hosszMasodperc;
-
-  // Normál módban csak a célidő után lehet továbbmenni.
-  if(!appConfig.debug && elapsed<target) return;
-
-  clearInterval(intervalId);intervalId=null;running=false;
-  if(index<workout.feladatok.length-1){
-    index++;renderExercise();running=true;$("pause").textContent="Szünet";intervalId=setInterval(tick,1000);
-  }else finishWorkout();
-}
-
 function finishWorkout(){
-  // A rutin végén azonnal elmentjük a rekordot a böngésző localStorage-ába.
-  // Ez még nem hoz létre fizikai fájlt; a fizikai edzesnaplo.json-t
-  // a "Adatok letöltése (JSON)" gomb hozza létre.
   if(completionRecorded)return;
-  completionRecorded=true;workoutEndTime=new Date().toISOString();
-  const log=getLog();
-  log.push({
-    timestamp:workoutEndTime,
+  clearInterval(intervalId);intervalId=null;running=false;
+  workoutEndTime=new Date().toISOString();
+  completionRecorded=true;
+
+  const result={
+    id:(crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now()),
+    szemely:currentPerson,
+    tornaId:workout.tornaId||currentWorkoutId,
+    tornaNeve:workout.tornaReszletesNeve||currentWorkoutId,
     kezdet:workoutStartTime,
     veg:workoutEndTime,
-    szemely:currentPerson,
-    tornaId:workout.tornaId||currentWorkout.id,
-    tornaNev:workout.tornaReszletesNeve,
-    latitude,longitude
-  });
-  saveLog(log);showStats();
+    datum:workoutEndTime.substring(0,10),
+    gps:{szelesseg:latitude,hosszusag:longitude}
+  };
+
+  const log=getLog();log.push(result);saveLog(log);
+  showStatistics();
+  $("workout").classList.add("hidden");
+  $("stats").classList.remove("hidden");
 }
 
-// Csak az aktuális személy + aktuális torna statisztikája látható.
-function showStats(){
-  const now=new Date(),seven=new Date(now.getTime()-7*86400000);
-  const id=workout.tornaId||currentWorkout.id;
-  const own=getLog().filter(x=>x.szemely===currentPerson&&x.tornaId===id);
-  $("last7").textContent=own.filter(x=>new Date(x.timestamp)>=seven).length;
-  $("month").textContent=own.filter(x=>{const d=new Date(x.timestamp);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()}).length;
-  $("statsFor").textContent=`${currentPerson} – ${workout.tornaReszletesNeve}`;$("gps").textContent=gpsStatus;
-  $("workout").classList.add("hidden");$("setup").classList.add("hidden");$("stats").classList.remove("hidden");
+function showStatistics(){
+  const now=new Date();
+  const sevenDaysAgo=new Date(now.getTime()-7*24*60*60*1000);
+  const own=getLog().filter(x=>x.szemely===currentPerson);
+  const last7=own.filter(x=>new Date(x.veg)>=sevenDaysAgo).length;
+  const month=own.filter(x=>{
+    const d=new Date(x.veg);
+    return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth();
+  }).length;
+  $("statsFor").textContent=`Statisztika: ${currentPerson}`;
+  $("last7").textContent=last7;
+  $("month").textContent=month;
+  $("gps").textContent=gpsStatus;
 }
 
-// A letöltés az aktuális személy és torna naplóját adja.
-function downloadLog(){
-  // A képernyőn csak a saját + aktuális torna statisztikája jelenik meg,
-  // de a letöltött JSON a teljes helyi edzésnaplót tartalmazza.
-  const all=getLog();
-
-  const blob=new Blob(
-    [JSON.stringify(all,null,2)],
-    {type:"application/json;charset=utf-8"}
-  );
-
+function downloadAllResults(){
+  /*
+   * Configurationből mindig a teljes naplót töltjük le,
+   * nem csak az aktuálisan kiválasztott személyét.
+   */
+  const data=getLog();
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
   a.href=url;
@@ -424,79 +589,190 @@ function downloadLog(){
   document.body.appendChild(a);
   a.click();
   a.remove();
-
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  URL.revokeObjectURL(url);
 }
 
-async function beginWorkout(){
-  currentPerson=$("person").value;
-  if(!currentPerson){alert("Válassz személyt!");return}
-  localStorage.setItem(PERSON_KEY,currentPerson);
+function escapeHtml(v){
+  return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;")
+    .replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+
+function generateWorkoutJson(){
+  const id=$("jsonWorkoutId").value.trim();
+  const name=$("jsonWorkoutName").value.trim();
+  if(!id||!name){showJsonMessage("A torna azonosító és neve kötelező.","error");return;}
+
+  let exercises;
+  try{exercises=JSON.parse($("jsonExercises").value);}
+  catch(e){showJsonMessage("A részfeladatok JSON formátuma hibás.","error");return;}
+
+  if(!Array.isArray(exercises)||!exercises.length){
+    showJsonMessage("Legalább egy feladat szükséges.","error");return;
+  }
+
+  for(const e of exercises){
+    if(!e.nev||!Number.isFinite(Number(e.hosszMasodperc))||!e.kep){
+      showJsonMessage("Minden feladatnál kell: nev, hosszMasodperc és kep.","error");return;
+    }
+    e.hosszMasodperc=Number(e.hosszMasodperc);
+  }
+
+  generatedWorkoutObject={tornaId:id,tornaReszletesNeve:name,feladatok:exercises};
+  $("generatedWorkoutJson").textContent=JSON.stringify(generatedWorkoutObject,null,2);
+  $("generatedWorkoutJson").classList.remove("hidden");
+  $("downloadWorkoutJson").classList.remove("hidden");
+  showJsonMessage("A torna JSON elkészült.","success");
+}
+
+function showJsonMessage(message,type){
+  $("jsonMessage").innerHTML=`<div class="${type}">${escapeHtml(message)}</div>`;
+}
+
+function downloadWorkoutJson(){
+  if(!generatedWorkoutObject)return;
+  const blob=new Blob([JSON.stringify(generatedWorkoutObject,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=generatedWorkoutObject.tornaId+".json";
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+
+/*
+ * JSON eredmény import:
+ * a letöltött edzesnaplo.json tömbjét validáljuk,
+ * majd a teljes naplót a localStorage-ban lecseréljük.
+ */
+async function uploadResultJson(){
+  if(!appConfig.enable_result_upload){
+    showUploadMessage("A JSON feltöltés a konfigurációban le van tiltva.","error");
+    return;
+  }
+
+  const file=$("resultJsonFile").files[0];
+  if(!file){showUploadMessage("Válassz ki egy JSON fájlt.","error");return;}
 
   try{
-    await loadWorkout($("workoutSelect").value);
-    index=0;elapsed=0;running=false;completionRecorded=false;
-    // A torna kezdetét és a GPS-lekérést már a "Torna indítása" gombnál rögzítjük.
-    workoutStartTime=new Date().toISOString();
-    workoutEndTime=null;latitude=null;longitude=null;gpsStatus="GPS-helymeghatározás folyamatban...";
-    requestGPS();
-    latitude=null;longitude=null;gpsStatus="A GPS-helyadat még nincs lekérve.";
-    $("setup").classList.add("hidden");$("stats").classList.add("hidden");$("workout").classList.remove("hidden");renderExercise();
-  }catch(e){$("loadStatus").textContent="Hiba: "+e.message}
+    const imported=JSON.parse(await file.text());
+    if(!Array.isArray(imported))throw new Error("A JSON gyökéreleme nem tömb.");
+
+    const valid=imported.filter(x=>
+      x&&typeof x==="object"&&
+      typeof x.szemely==="string"&&
+      typeof x.tornaId==="string"&&
+      typeof x.kezdet==="string"&&
+      typeof x.veg==="string"
+    );
+
+    if(valid.length!==imported.length){
+      throw new Error("A JSON egy vagy több eleme nem érvényes edzésnapló-bejegyzés.");
+    }
+
+    saveLog(valid);
+    showUploadMessage(`${valid.length} edzésnapló-bejegyzés sikeresen betöltve.`,"success");
+  }catch(e){
+    console.error(e);
+    showUploadMessage("A JSON feltöltése sikertelen: "+e.message,"error");
+  }
 }
 
-$("begin").addEventListener("click",beginWorkout);
-$("pause").addEventListener("click",startPause);
+function showUploadMessage(message,type){
+  $("uploadMessage").innerHTML=`<div class="${type}">${escapeHtml(message)}</div>`;
+}
+
+function renderConfiguration(){
+  $("configDisplay").textContent=JSON.stringify(appConfig,null,2);
+  if(appConfig.enable_result_upload){
+    $("uploadSection").classList.remove("hidden");
+    $("uploadDisabledMessage").classList.add("hidden");
+  }else{
+    $("uploadSection").classList.add("hidden");
+    $("uploadDisabledMessage").classList.remove("hidden");
+  }
+}
+
+function showConfiguration(){
+  $("mainPage").classList.add("hidden");
+  $("configurationPage").classList.remove("hidden");
+  renderConfiguration();
+  history.pushState({page:"configuration"},"","#configuration");
+}
+
+function showMain(){
+  $("configurationPage").classList.add("hidden");
+  $("mainPage").classList.remove("hidden");
+  if(location.hash==="#configuration"){
+    history.pushState({}, "", location.pathname+location.search);
+  }
+}
+
+$("configurationBtn").addEventListener("click",showConfiguration);
+$("backToMain").addEventListener("click",showMain);
+$("uploadResultJson").addEventListener("click",uploadResultJson);
+$("downloadResultsConfig").addEventListener("click",downloadAllResults);
+$("startFirst").addEventListener("click",startWorkoutTimer);
 $("next").addEventListener("click",nextExercise);
-$("download").addEventListener("click",downloadLog);
-$("again").addEventListener("click",()=>location.reload());
 
-$("person").addEventListener("change",()=>{
-  const person=persons.find(p=>p.nev===$("person").value);
-  if(!person)return;
-  localStorage.setItem(PERSON_KEY,person.nev);
+$("again").addEventListener("click",()=>{
+  $("stats").classList.add("hidden");
+  $("setup").classList.remove("hidden");
+  $("subtitle").textContent=workout?.tornaReszletesNeve||"";
+});
 
-  // Először a személy saját utolsó választását használjuk.
-  // Ha még nincs ilyen, a szemelyek.json-ban megadott alapértelmezett torna jön.
-  const saved=localStorage.getItem(PERSON_WORKOUT_PREFIX+person.nev);
-  const preferred=saved||person.alapertelmezettTorna;
+$("begin").addEventListener("click",async()=>{
+  const selected=$("workoutSelect").value;
+  currentPerson=$("person").value;
+  localStorage.setItem(PERSON_KEY,currentPerson);
+  localStorage.setItem(WORKOUT_KEY,selected);
+  localStorage.setItem(PERSON_WORKOUT_PREFIX+currentPerson,selected);
 
-  if(preferred && [...$("workoutSelect").options].some(o=>o.value===preferred)){
-    $("workoutSelect").value=preferred;
-    localStorage.setItem(WORKOUT_KEY,preferred);
+  const item=WORKOUTS.find(w=>w.id===selected);
+  if(!item)return;
+
+  try{
+    workout=await loadWorkoutJson(item);
+    /*
+     * A hiányzó auto_kovetkezo mező alapértelmezése false.
+     */
+    if(typeof workout.auto_kovetkezo!=="boolean"){
+      workout.auto_kovetkezo=false;
+    }
+    currentWorkoutId=selected;
+    index=0;elapsed=0;running=false;completionRecorded=false;
+    workoutStartTime=null;workoutEndTime=null;
+    latitude=null;longitude=null;
+    gpsStatus="A GPS-helyadat még nincs lekérve.";
+
+    $("setup").classList.add("hidden");
+    $("stats").classList.add("hidden");
+    $("workout").classList.remove("hidden");
+    $("subtitle").textContent=workout.tornaReszletesNeve||"";
+    renderExercise();
+  }catch(e){
+    console.error(e);
+    $("loadStatus").textContent="A torna nem tölthető be: "+e.message;
   }
 });
 
-$("workoutSelect").addEventListener("change",e=>{
-  if(currentPerson){
-    localStorage.setItem(PERSON_WORKOUT_PREFIX+currentPerson,e.target.value);
+window.addEventListener("popstate",()=>{
+  if(location.hash==="#configuration"){
+    $("mainPage").classList.add("hidden");
+    $("configurationPage").classList.remove("hidden");
+    renderConfiguration();
+  }else{
+    showMain();
   }
-  localStorage.setItem(WORKOUT_KEY,e.target.value);
 });
-
-$("guideBtn").addEventListener("click",()=>{
-  $("guide").classList.toggle("hidden");
-  $("example").textContent=JSON.stringify({
-    tornaId:"Billa_Torna2",
-    tornaReszletesNeve:"Példa torna",
-    feladatok:[{nev:"Első feladat",hosszMasodperc:30,kep:"elso.jpg",leiras:"A feladat leírása."}]
-  },null,2);
-});
-$("closeGuide").addEventListener("click",()=>$("guide").classList.add("hidden"));
 
 async function initialize(){
   await loadConfig();
   await loadPersons();
+  populatePersons();
   await loadWorkoutOptions();
 
-  const person=$("person").value;
-  const personData=persons.find(p=>p.nev===person);
-  const saved=person?localStorage.getItem(PERSON_WORKOUT_PREFIX+person):null;
-  const preferred=saved||(personData&&personData.alapertelmezettTorna);
-
-  if(preferred && [...$("workoutSelect").options].some(o=>o.value===preferred)){
-    $("workoutSelect").value=preferred;
-    localStorage.setItem(WORKOUT_KEY,preferred);
+  if(location.hash==="#configuration"){
+    $("mainPage").classList.add("hidden");
+    $("configurationPage").classList.remove("hidden");
+    renderConfiguration();
   }
 }
 

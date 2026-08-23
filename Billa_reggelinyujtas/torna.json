@@ -1,6 +1,7 @@
 {
   "tornaId": "Billa_reggelinyujtas",
   "tornaReszletesNeve": "5 perces reggeli nyújtás",
+  "auto_kovetkezo": false,
   "feladatok": [
     {
       "nev": "Dinamikus Törzscsavarás",

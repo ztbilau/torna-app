@@ -1,6 +1,7 @@
 {
   "tornaId": "Reggeli_Gerinc_Es_Csipo_01",
   "tornaReszletesNeve": "Reggeli 5 perces gerinc- és csípőébresztő rutin",
+  "auto_kovetkezo": false,
   "feladatok": [
     {
       "nev": "Térdhúzás mellkashoz",
