@@ -119,17 +119,22 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
 <pre>{
   "tornaId": "Billa_reggelinyujtas",
   "tornaReszletesNeve": "5 perces reggeli nyújtás",
-  "auto_kovetkezo": false,
   "feladatok": [
     {
       "nev": "Dinamikus Törzscsavarás",
       "hosszMasodperc": 30,
       "kep": "torzscsavaras.jpg",
-      "leiras": "..."
+      "leiras": "...",
+      "automatikus_kovetkezo": false
     }
   ]
 }</pre>
-<p class="muted small">A <code>kep</code> mezőben a torna mappájában található fájl neve szerepeljen. A képeket nem kell a gyökérbe másolni.</p>
+<p class="muted small">
+  Az <code>automatikus_kovetkezo</code> mező minden feladatnál külön szabályozza a továbblépést:
+  <code>true</code> esetén az idő lejártakor automatikusan indul a következő feladat;
+  <code>false</code> vagy hiányzó mező esetén a <strong>Következő</strong> gombot kell megnyomni.
+  Az alapértelmezés <code>false</code>. A <code>kep</code> mezőben a torna mappájában található fájl neve szerepeljen.
+</p>
 
 
 <div class="config-section">
@@ -204,21 +209,7 @@ const LOCAL_PERSONS_FALLBACK = {
 
 /* file:// módban a jelenlegi Billa torna továbbra is működjön. */
 const LOCAL_JSON_FALLBACKS = {
-  Billa_reggelinyujtas: {
-    tornaId:"Billa_reggelinyujtas",
-    tornaReszletesNeve:"5 perces reggeli nyújtás",
-    feladatok:[
-      {nev:"Dinamikus Törzscsavarás",hosszMasodperc:30,kep:"torzscsavaras.jpg",leiras:"Állj vállszéles terpeszbe, laza törzscsavarások mindkét irányba, a karok szabadon lengenek."},
-      {nev:"Mellkasnyitás",hosszMasodperc:30,kep:"mellkasnyitas.jpg",leiras:"Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!"},
-      {nev:"Csípőhorpasz Nyújtás (Bal)",hosszMasodperc:30,kep:"csipohorpasz.jpg",leiras:"Féltérden (bal láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"},
-      {nev:"Csípőhorpasz Nyújtás (Jobb)",hosszMasodperc:30,kep:"csipohorpasz.jpg",leiras:"Féltérden (jobb láb hátul). Feszítsd meg a farizmod és told előre a medencéd!"},
-      {nev:"Combhajlító Nyújtás (Bal)",hosszMasodperc:30,kep:"combhajlito.jpg",leiras:"Bal láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."},
-      {nev:"Combhajlító Nyújtás (Jobb)",hosszMasodperc:30,kep:"combhajlito.jpg",leiras:"Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."},
-      {nev:"Fókuszált Combnyújtás (Bal)",hosszMasodperc:30,kep:"combnyujtas.jpg",leiras:"Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"},
-      {nev:"Fókuszált Combnyújtás (Jobb)",hosszMasodperc:30,kep:"combnyujtas.jpg",leiras:"Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"},
-      {nev:"Macska-tehén Átmozgatás",hosszMasodperc:60,kep:"macska-tehen.jpg",leiras:"Négykézláb. Lassan gömbölyítsd a hátad a plafon felé, majd óvatosan homoríts lefelé."}
-    ]
-  }
+  Billa_reggelinyujtas: {"tornaId":"Billa_reggelinyujtas","tornaReszletesNeve":"5 perces reggeli nyújtás","feladatok":[{"nev":"Dinamikus Törzscsavarás","hosszMasodperc":30,"kep":"torzscsavaras.jpg","leiras":"Állj vállszéles terpeszbe, laza törzscsavarások mindkét irányba, a karok szabadon lengenek.","automatikus_kovetkezo":false},{"nev":"Mellkasnyitás","hosszMasodperc":30,"kep":"mellkasnyitas.jpg","leiras":"Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!","automatikus_kovetkezo":false},{"nev":"Csípőhorpasz Nyújtás (Bal)","hosszMasodperc":30,"kep":"csipohorpasz.jpg","leiras":"Féltérden (bal láb hátul). Feszítsd meg a farizmod és told előre a medencéd!","automatikus_kovetkezo":false},{"nev":"Csípőhorpasz Nyújtás (Jobb)","hosszMasodperc":30,"kep":"csipohorpasz.jpg","leiras":"Féltérden (jobb láb hátul). Feszítsd meg a farizmod és told előre a medencéd!","automatikus_kovetkezo":false},{"nev":"Combhajlító Nyújtás (Bal)","hosszMasodperc":30,"kep":"combhajlito.jpg","leiras":"Bal láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman.","automatikus_kovetkezo":false},{"nev":"Combhajlító Nyújtás (Jobb)","hosszMasodperc":30,"kep":"combhajlito.jpg","leiras":"Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman.","automatikus_kovetkezo":false},{"nev":"Fókuszált Combnyújtás (Bal)","hosszMasodperc":30,"kep":"combnyujtas.jpg","leiras":"Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!","automatikus_kovetkezo":false},{"nev":"Fókuszált Combnyújtás (Jobb)","hosszMasodperc":30,"kep":"combnyujtas.jpg","leiras":"Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!","automatikus_kovetkezo":false},{"nev":"Macska-tehén Átmozgatás","hosszMasodperc":60,"kep":"macska-tehen.jpg","leiras":"Négykézláb. Lassan gömbölyítsd a hátad a plafon felé, majd óvatosan homoríts lefelé.","automatikus_kovetkezo":false}]}
 };
 
 let appConfig={...LOCAL_CONFIG_FALLBACK};
@@ -474,16 +465,18 @@ function startWorkoutTimer(){
 function tick(){
   elapsed++;
 
-  const target=workout.feladatok[index].hosszMasodperc;
+  const exercise = workout.feladatok[index];
+  const target = Number(exercise.hosszMasodperc);
+  const autoNext = exercise.automatikus_kovetkezo === true;
 
-  if(elapsed===target){
+  if(elapsed === target){
     beep();
 
     /*
-     * Ha a torna leírójában auto_kovetkezo=true,
-     * az idő lejártakor azonnal indul a következő gyakorlat.
+     * Minden gyakorlat saját automatikus_kovetkezo értékét használja.
+     * Hiányzó mező = false.
      */
-    if(workout.auto_kovetkezo===true){
+    if(autoNext){
       setTimeout(()=>{
         if(running) nextExercise(true);
       },300);
@@ -491,47 +484,49 @@ function tick(){
     }
   }
 
-  if(elapsed>=target){
+  if(elapsed >= target){
     $("timer").classList.add("overtime");
-    $("timer").textContent="+"+formatTime(elapsed-target);
+    $("timer").textContent = "+" + formatTime(elapsed-target);
     $("next").classList.remove("invisible");
   }else{
-    $("timer").textContent=formatTime(target-elapsed);
+    $("timer").textContent = formatTime(target-elapsed);
   }
 
-  if(appConfig.debug && !workout.auto_kovetkezo && running){
+  /*
+   * Debug módban az automatikus továbblépésre állított feladat
+   * kivételével bármikor használható a Következő.
+   */
+  if(appConfig.debug && !autoNext && running){
     $("next").classList.remove("invisible");
   }
 }
 
 function nextExercise(auto=false){
-  const target=workout.feladatok[index].hosszMasodperc;
+  const exercise = workout.feladatok[index];
+  const target = Number(exercise.hosszMasodperc);
+  const autoNext = exercise.automatikus_kovetkezo === true;
 
-  /*
-   * Manuális továbblépés:
-   * normál módban csak a célidő után engedjük,
-   * debug módban bármikor.
-   *
-   * Automatikus továbblépésnél a torna auto_kovetkezo
-   * beállítása garantálja, hogy a célidő lejárt.
-   */
-  if(!auto && !appConfig.debug && elapsed<target) return;
+  /* Automatikus továbblépés csak explicit true esetén engedélyezett. */
+  if(auto && !autoNext) return;
+
+  /* Normál módban manuálisan csak az idő lejárta után lehet továbblépni. */
+  if(!auto && !appConfig.debug && elapsed < target) return;
 
   clearInterval(intervalId);
-  intervalId=null;
-  running=false;
+  intervalId = null;
+  running = false;
 
-  if(index<workout.feladatok.length-1){
+  if(index < workout.feladatok.length - 1){
     index++;
-    elapsed=0;
+    elapsed = 0;
     renderExercise();
 
     /*
-     * A következő gyakorlat már indulhat is.
-     * Indítás gomb csak az első gyakorlaton van.
+     * Az első gyakorlat után a következő feladatok automatikusan futnak.
+     * Az Indítás gomb kizárólag az első gyakorlatnál látható.
      */
-    running=true;
-    intervalId=setInterval(tick,1000);
+    running = true;
+    intervalId = setInterval(tick,1000);
   }else{
     finishWorkout();
   }
@@ -597,45 +592,6 @@ function escapeHtml(v){
     .replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 }
 
-function generateWorkoutJson(){
-  const id=$("jsonWorkoutId").value.trim();
-  const name=$("jsonWorkoutName").value.trim();
-  if(!id||!name){showJsonMessage("A torna azonosító és neve kötelező.","error");return;}
-
-  let exercises;
-  try{exercises=JSON.parse($("jsonExercises").value);}
-  catch(e){showJsonMessage("A részfeladatok JSON formátuma hibás.","error");return;}
-
-  if(!Array.isArray(exercises)||!exercises.length){
-    showJsonMessage("Legalább egy feladat szükséges.","error");return;
-  }
-
-  for(const e of exercises){
-    if(!e.nev||!Number.isFinite(Number(e.hosszMasodperc))||!e.kep){
-      showJsonMessage("Minden feladatnál kell: nev, hosszMasodperc és kep.","error");return;
-    }
-    e.hosszMasodperc=Number(e.hosszMasodperc);
-  }
-
-  generatedWorkoutObject={tornaId:id,tornaReszletesNeve:name,feladatok:exercises};
-  $("generatedWorkoutJson").textContent=JSON.stringify(generatedWorkoutObject,null,2);
-  $("generatedWorkoutJson").classList.remove("hidden");
-  $("downloadWorkoutJson").classList.remove("hidden");
-  showJsonMessage("A torna JSON elkészült.","success");
-}
-
-function showJsonMessage(message,type){
-  $("jsonMessage").innerHTML=`<div class="${type}">${escapeHtml(message)}</div>`;
-}
-
-function downloadWorkoutJson(){
-  if(!generatedWorkoutObject)return;
-  const blob=new Blob([JSON.stringify(generatedWorkoutObject,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;a.download=generatedWorkoutObject.tornaId+".json";
-  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
-}
 
 /*
  * JSON eredmény import:
@@ -730,6 +686,10 @@ $("begin").addEventListener("click",async()=>{
 
   try{
     workout=await loadWorkoutJson(item);
+    workout.feladatok = workout.feladatok.map(exercise => ({
+      ...exercise,
+      automatikus_kovetkezo: exercise.automatikus_kovetkezo === true
+    }));
     /*
      * A hiányzó auto_kovetkezo mező alapértelmezése false.
      */

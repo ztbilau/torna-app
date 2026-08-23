@@ -7,67 +7,78 @@
       "nev": "Dinamikus Törzscsavarás",
       "hosszMasodperc": 30,
       "kep": "torzscsavaras.jpg",
-      "leiras": "Állj vállszéles terpeszbe, laza törzscsavarások mindkét irányba, a karok szabadon lengenek."
+      "leiras": "Állj vállszéles terpeszbe, laza törzscsavarások mindkét irányba, a karok szabadon lengenek.",
+      "automatikus_kovetkezo": true
     },
     {
       "nev": "Mellkasnyitás",
       "hosszMasodperc": 30,
       "kep": "mellkasnyitas.jpg",
-      "leiras": "Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!"
+      "leiras": "Kulcsold össze a kezed a hátad mögött, húzd hátra és lefelé a vállaidat. Nyisd a mellkast!",
+      "automatikus_kovetkezo": true
     },
     {
       "nev": "Csípőkörzés (Bal)",
       "hosszMasodperc": 20,
       "kep": "csipokorzes.jpg",
-      "leiras": "Álló helyzetben emeld fel a bal térded, és írj le vele minél nagyobb köröket kifelé, megnyitva a csípőízületet."
+      "leiras": "Álló helyzetben emeld fel a bal térded, és írj le vele minél nagyobb köröket kifelé, megnyitva a csípőízületet.",
+      "automatikus_kovetkezo": true
     },
     {
       "nev": "Csípőkörzés (Jobb)",
       "hosszMasodperc": 20,
       "kep": "csipokorzes.jpg",
-      "leiras": "Álló helyzetben emeld fel a jobb térded, és írj le vele minél nagyobb köröket kifelé, megnyitva a csípőízületet."
+      "leiras": "Álló helyzetben emeld fel a jobb térded, és írj le vele minél nagyobb köröket kifelé, megnyitva a csípőízületet.",
+      "automatikus_kovetkezo": true
     },
     {
       "nev": "Fókuszált Combnyújtás (Bal)",
       "hosszMasodperc": 30,
       "kep": "combnyujtas.jpg",
-      "leiras": "Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
+      "leiras": "Állva (kapaszkodj meg). Bal térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!",
+      "automatikus_kovetkezo": false
     },
     {
       "nev": "Fókuszált Combnyújtás (Jobb)",
       "hosszMasodperc": 30,
       "kep": "combnyujtas.jpg",
-      "leiras": "Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!"
+      "leiras": "Állva (kapaszkodj meg). Jobb térd hajlít, sarok a fenékhez húzva. Térdek egymás mellett!",
+      "automatikus_kovetkezo": false
     },
     {
       "nev": "Combhajlító Nyújtás (Bal)",
       "hosszMasodperc": 30,
       "kep": "combhajlito.jpg",
-      "leiras": "Bal láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."
+      "leiras": "Bal láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman.",
+      "automatikus_kovetkezo": false
     },
     {
       "nev": "Combhajlító Nyújtás (Jobb)",
       "hosszMasodperc": 30,
       "kep": "combhajlito.jpg",
-      "leiras": "Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman."
+      "leiras": "Jobb láb nyújtva elöl, lábfej pipál, egyenes háttal dőlj rá finoman.",
+      "automatikus_kovetkezo": false
     },
     {
       "nev": "Hokedlis Combnyújtás (Bal)",
       "hosszMasodperc": 30,
       "kep": "hokedlis_combnyujtas.jpg",
-      "leiras": "A bal térd a földön (matracon) támaszkodik, miközben a bal lábfej hátul egy hokedlin vagy alacsony emelvényen pihen. Told előre finoman a medencéd, és nyújtsd ki az ellentétes (jobb) karod előre."
+      "leiras": "A bal térd a földön (matracon) támaszkodik, miközben a bal lábfej hátul egy hokedlin vagy alacsony emelvényen pihen. Told előre finoman a medencéd, és nyújtsd ki az ellentétes (jobb) karod előre.",
+      "automatikus_kovetkezo": false
     },
     {
       "nev": "Hokedlis Combnyújtás (Jobb)",
       "hosszMasodperc": 30,
       "kep": "hokedlis_combnyujtas.jpg",
-      "leiras": "A jobb térd a földön (matracon) támaszkodik, miközben a jobb lábfej hátul egy hokedlin vagy alacsony emelvényen pihen. Told előre finoman a medencéd, és nyújtsd ki az ellentétes (bal) karod előre."
+      "leiras": "A jobb térd a földön (matracon) támaszkodik, miközben a jobb lábfej hátul egy hokedlin vagy alacsony emelvényen pihen. Told előre finoman a medencéd, és nyújtsd ki az ellentétes (bal) karod előre.",
+      "automatikus_kovetkezo": false
     },
     {
       "nev": "Macska-tehén Átmozgatás",
       "hosszMasodperc": 60,
       "kep": "macska-tehen.jpg",
-      "leiras": "Négykézláb. Lassan gömbölyítsd a hátad a plafon felé, majd óvatosan homoríts lefelé."
+      "leiras": "Négykézláb. Lassan gömbölyítsd a hátad a plafon felé, majd óvatosan homoríts lefelé.",
+      "automatikus_kovetkezo": false
     }
   ]
 }
