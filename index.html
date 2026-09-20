@@ -104,6 +104,7 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
   <div class="location-report">
     <h3>Edzéshelyek az elmúlt 28 napban</h3>
     <p class="muted small" id="locationSummary"></p>
+    <a class="location-link hidden" id="allLocationsMap" target="_blank" rel="noopener">Összes hely megnyitása Google Térképen</a>
     <div class="location-list" id="locationList"></div>
   </div>
   <p class="notice" id="gps"></p>
@@ -726,14 +727,13 @@ async function loadLocationNames(locations){
   }
 }
 
-function renderLocationStatistics(records,now){
-  const cutoff=new Date(now.getTime()-28*24*60*60*1000);
-  const recent=records
-    .filter(record=>new Date(record.veg)>=cutoff)
+function groupLocations(records,cutoff=null){
+  const candidates=records
+    .filter(record=>!cutoff||new Date(record.veg)>=cutoff)
     .sort((first,second)=>new Date(second.veg)-new Date(first.veg));
   const locations=[];
 
-  recent.forEach(record=>{
+  candidates.forEach(record=>{
     const point=getRecordLocation(record);
     if(!point)return;
     let location=locations.find(item=>distanceInKm(item,point)<=0.5);
@@ -743,10 +743,32 @@ function renderLocationStatistics(records,now){
     }
     location.visits.push(record);
   });
+  return locations;
+}
+
+function renderLocationStatistics(records,now){
+  const cutoff=new Date(now.getTime()-28*24*60*60*1000);
+  const locations=groupLocations(records,cutoff);
+  const allLocations=groupLocations(records);
 
   $("locationSummary").textContent=locations.length
     ? `${locations.length} különböző helyen, összesen ${locations.reduce((total,item)=>total+item.visits.length,0)} GPS-szel rögzített torna.`
     : "Az elmúlt 28 napban nincs 500 méteres körzetbe sorolható GPS-adat.";
+  const allLocationsMap=$("allLocationsMap");
+  allLocationsMap.classList.toggle("hidden",allLocations.length===0);
+  if(allLocations.length){
+    const places=allLocations.map(location=>`${location.latitude.toFixed(6)},${location.longitude.toFixed(6)}`);
+    if(places.length===1){
+      allLocationsMap.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(places[0]);
+    }else{
+      const waypoints=places.slice(1,-1).join("|");
+      allLocationsMap.href="https://www.google.com/maps/dir/?api=1&origin="+
+        encodeURIComponent(places[0])+"&destination="+encodeURIComponent(places[places.length-1])+"&waypoints="+
+        encodeURIComponent(waypoints);
+    }
+  }else{
+    allLocationsMap.removeAttribute("href");
+  }
   $("locationList").innerHTML=locations.length?locations.map((location,index)=>{
     const query=`${location.latitude.toFixed(6)},${location.longitude.toFixed(6)}`;
     const mapUrl="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(query);
