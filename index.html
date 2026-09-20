@@ -14,6 +14,7 @@
 body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .app{width:min(1050px,100%);margin:auto;padding:18px}
 .header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.header-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 h1{margin:0;font-size:clamp(1.6rem,4vw,2.4rem)}
 h2{margin:0 0 10px}h3{margin:20px 0 8px}
 .muted{color:var(--muted)}
@@ -39,6 +40,8 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .overtime{color:var(--danger)}
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
 .stat{padding:20px;border:1px solid var(--border);border-radius:16px}.number{font-size:2.7rem;font-weight:800;color:var(--accent)}
+.weekly-report{margin-top:24px}.weekly-list{display:grid;gap:10px}.week-row{padding:15px 16px;border:1px solid var(--border);border-radius:14px;background:#fbfcff}.week-heading{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.week-name{font-weight:800}.week-period{font-size:.85rem;color:var(--muted)}.week-data{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}.week-value{font-weight:700}.week-change{font-size:.88rem;color:var(--muted)}.week-change.positive{color:var(--success)}.week-change.negative{color:var(--danger)}.week-bar{height:7px;background:#edf0f5;border-radius:99px;margin-top:12px;overflow:hidden}.week-bar-fill{height:100%;background:linear-gradient(90deg,#4263eb,#6c5ce7);border-radius:99px;min-width:2px}
+.location-report{margin-top:24px}.location-list{display:grid;gap:10px}.location-row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:15px 16px;border:1px solid var(--border);border-radius:14px;background:#fbfcff}.location-name{font-weight:800}.location-meta{color:var(--muted);font-size:.88rem;margin-top:4px}.location-link{white-space:nowrap;background:var(--accent2);color:#3046a8;padding:9px 12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.88rem}
 pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-radius:12px;overflow:auto;font-size:.85rem}
 .notice,.error,.success{padding:12px;border-radius:10px;margin-top:15px}
 .notice{background:#fff7e6;color:#8a5b00}.error{background:#fef3f2;color:#b42318}.success{background:#ecfdf3;color:var(--success)}
@@ -53,7 +56,10 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
 <div id="mainPage">
 <header class="header">
   <div><h1>Torna App by Billa</h1><div class="muted" id="subtitle"></div></div>
-  <button class="link" id="configurationBtn">Configuration</button>
+  <div class="header-actions">
+    <button class="link" id="statisticsBtn">Statisztika</button>
+    <button class="link" id="configurationBtn">Configuration</button>
+  </div>
 </header>
 
 <section class="card setup" id="setup">
@@ -75,6 +81,7 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
       <h2 class="title" id="title"></h2>
       <p class="description" id="description"></p>
       <div class="timer" id="timer">00:30</div>
+      <p class="muted small" id="screenStatus"></p>
       <div class="actions">
         <button class="secondary" id="startFirst">Indítás</button>
         <button class="primary invisible" id="next">Következő</button>
@@ -88,6 +95,16 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
   <div class="stat-grid">
     <div class="stat"><div class="number" id="last7">0</div><div class="muted">rutin az elmúlt 7 napban</div></div>
     <div class="stat"><div class="number" id="month">0</div><div class="muted">rutin ebben a hónapban</div></div>
+  </div>
+  <div class="weekly-report">
+    <h3>Heti fejlődés</h3>
+    <p class="muted small">Az elmúlt 4 gördülő hét összehasonlítása.</p>
+    <div class="weekly-list" id="weeklyList"></div>
+  </div>
+  <div class="location-report">
+    <h3>Edzéshelyek az elmúlt 28 napban</h3>
+    <p class="muted small" id="locationSummary"></p>
+    <div class="location-list" id="locationList"></div>
   </div>
   <p class="notice" id="gps"></p>
   <div class="actions">
@@ -218,6 +235,8 @@ let persons=[];
 let workout=null,currentPerson="",currentWorkoutId="";
 let index=0,elapsed=0,running=false,intervalId=null,audioContext=null;
 let workoutStartTime=null,workoutEndTime=null,completionRecorded=false;
+let screenWakeLock=null;
+const reverseGeocodeCache={};
 let latitude=null,longitude=null,gpsStatus="A GPS-helyadat még nincs lekérve.";
 
 
@@ -266,6 +285,31 @@ function getLog(){
   catch(e){return[];}
 }
 function saveLog(log){localStorage.setItem(LOG_KEY,JSON.stringify(log));}
+
+async function requestScreenWakeLock(){
+  if(!("wakeLock" in navigator)){
+    $("screenStatus").textContent="A képernyő ébrentartását ez a böngésző nem támogatja.";
+    return;
+  }
+  try{
+    screenWakeLock=await navigator.wakeLock.request("screen");
+    $("screenStatus").textContent="A képernyő ébren marad a torna végéig.";
+    screenWakeLock.addEventListener("release",()=>{screenWakeLock=null;});
+  }catch(e){
+    console.warn("Képernyő-ébrentartás nem kérhető:",e);
+    $("screenStatus").textContent="A képernyő ébrentartását a böngésző nem engedélyezte.";
+  }
+}
+
+async function releaseScreenWakeLock(){
+  if(!screenWakeLock)return;
+  try{await screenWakeLock.release();}catch(e){console.warn("Képernyő-ébrentartás lezárási hiba:",e);}
+  screenWakeLock=null;
+}
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible"&&running)requestScreenWakeLock();
+});
 
 async function loadConfig(){
   if(location.protocol==="file:"){
@@ -458,6 +502,7 @@ function startWorkoutTimer(){
   }catch(e){}
 
   running=true;
+  requestScreenWakeLock();
 
   /*
    * Az első gyakorlat Indítás gombja a kattintás után eltűnik.
@@ -555,6 +600,7 @@ function nextExercise(auto=false){
 function finishWorkout(){
   if(completionRecorded)return;
   clearInterval(intervalId);intervalId=null;running=false;
+  releaseScreenWakeLock();
   workoutEndTime=new Date().toISOString();
   completionRecorded=true;
 
@@ -587,7 +633,129 @@ function showStatistics(){
   $("statsFor").textContent=`Statisztika: ${currentPerson}`;
   $("last7").textContent=last7;
   $("month").textContent=month;
+  renderWeeklyStatistics(own,now);
+  renderLocationStatistics(own,now);
   $("gps").textContent=gpsStatus;
+}
+
+function formatDate(date){
+  return date.toLocaleDateString("hu-HU",{month:"short",day:"numeric"});
+}
+
+function renderWeeklyStatistics(records,now){
+  const weeks=[];
+  for(let index=3;index>=0;index--){
+    const start=new Date(now.getTime()-(index+1)*7*24*60*60*1000);
+    const end=new Date(now.getTime()-index*7*24*60*60*1000);
+    const items=records.filter(record=>{
+      const date=new Date(record.veg);
+      return date>=start&&date<end;
+    });
+    const minutes=items.reduce((total,record)=>{
+      const duration=(new Date(record.veg)-new Date(record.kezdet))/60000;
+      return total+(Number.isFinite(duration)&&duration>0?duration:0);
+    },0);
+    weeks.push({start,end,items,minutes});
+  }
+
+  const maximum=Math.max(...weeks.map(week=>week.items.length),1);
+  $("weeklyList").innerHTML=weeks.map((week,index)=>{
+    const previous=index>0?weeks[index-1].items.length:null;
+    const change=previous===null?"":week.items.length-previous;
+    const changeText=previous===null
+      ?"Első összehasonlítási hét"
+      :change===0?"Változatlan az előző héthez képest"
+      :`${change>0?"+":""}${change} rutin az előző héthez képest`;
+    const changeClass=change>0?"positive":change<0?"negative":"";
+    const minutes=Math.round(week.minutes);
+    return `<div class="week-row">
+      <div class="week-heading"><span class="week-name">${index+1}. hét</span><span class="week-period">${formatDate(week.start)} - ${formatDate(week.end)}</span></div>
+      <div class="week-data"><span class="week-value">${week.items.length} rutin</span><span class="week-value">${minutes} perc</span><span class="week-change ${changeClass}">${changeText}</span></div>
+      <div class="week-bar" aria-label="${week.items.length} rutin a ${maximum} maximális heti rutinból"><div class="week-bar-fill" style="width:${week.items.length/maximum*100}%"></div></div>
+    </div>`;
+  }).join("");
+}
+
+function distanceInKm(first,second){
+  const earthRadius=6371;
+  const latitudeDelta=(second.latitude-first.latitude)*Math.PI/180;
+  const longitudeDelta=(second.longitude-first.longitude)*Math.PI/180;
+  const a=Math.sin(latitudeDelta/2)**2+
+    Math.cos(first.latitude*Math.PI/180)*Math.cos(second.latitude*Math.PI/180)*
+    Math.sin(longitudeDelta/2)**2;
+  return earthRadius*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function getRecordLocation(record){
+  const latitude=Number(record.gps?.szelesseg);
+  const longitude=Number(record.gps?.hosszusag);
+  if(!Number.isFinite(latitude)||!Number.isFinite(longitude)||
+     latitude<-90||latitude>90||longitude<-180||longitude>180)return null;
+  return {latitude,longitude};
+}
+
+async function getLocationName(location){
+  const key=`${location.latitude.toFixed(5)},${location.longitude.toFixed(5)}`;
+  if(Object.prototype.hasOwnProperty.call(reverseGeocodeCache,key)){
+    return reverseGeocodeCache[key];
+  }
+  try{
+    const url="https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+
+      encodeURIComponent(location.latitude)+"&longitude="+
+      encodeURIComponent(location.longitude)+"&localityLanguage=hu";
+    const response=await fetch(url,{cache:"force-cache"});
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const data=await response.json();
+    const name=data.locality||data.city||data.principalSubdivision||data.countryName||"";
+    reverseGeocodeCache[key]=name;
+    return name;
+  }catch(error){
+    console.warn("Helynév nem kérhető le:",error);
+    reverseGeocodeCache[key]="";
+    return "";
+  }
+}
+
+async function loadLocationNames(locations){
+  for(const [index,location] of locations.entries()){
+    const name=await getLocationName(location);
+    if(name){
+      const nameElement=$("location-name-"+index);
+      if(nameElement)nameElement.textContent=name;
+    }
+  }
+}
+
+function renderLocationStatistics(records,now){
+  const cutoff=new Date(now.getTime()-28*24*60*60*1000);
+  const recent=records
+    .filter(record=>new Date(record.veg)>=cutoff)
+    .sort((first,second)=>new Date(second.veg)-new Date(first.veg));
+  const locations=[];
+
+  recent.forEach(record=>{
+    const point=getRecordLocation(record);
+    if(!point)return;
+    let location=locations.find(item=>distanceInKm(item,point)<=0.5);
+    if(!location){
+      location={...point,visits:[],lastVisit:record.veg};
+      locations.push(location);
+    }
+    location.visits.push(record);
+  });
+
+  $("locationSummary").textContent=locations.length
+    ? `${locations.length} különböző helyen, összesen ${locations.reduce((total,item)=>total+item.visits.length,0)} GPS-szel rögzített torna.`
+    : "Az elmúlt 28 napban nincs 500 méteres körzetbe sorolható GPS-adat.";
+  $("locationList").innerHTML=locations.length?locations.map((location,index)=>{
+    const query=`${location.latitude.toFixed(6)},${location.longitude.toFixed(6)}`;
+    const mapUrl="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(query);
+    return `<div class="location-row">
+      <div><div class="location-name" id="location-name-${index}">Helyszín ${index+1}</div><div class="location-meta">${location.visits.length} torna · ${query}</div></div>
+      <a class="location-link" href="${mapUrl}" target="_blank" rel="noopener">Megnyitás térképen</a>
+    </div>`;
+  }).join(""):"";
+  if(locations.length)loadLocationNames(locations);
 }
 
 function downloadAllResults(){
@@ -673,6 +841,14 @@ function showConfiguration(){
   history.pushState({page:"configuration"},"","#configuration");
 }
 
+function showStatisticsPage(){
+  if(running)return;
+  showStatistics();
+  $("setup").classList.add("hidden");
+  $("workout").classList.add("hidden");
+  $("stats").classList.remove("hidden");
+}
+
 function showMain(){
   $("configurationPage").classList.add("hidden");
   $("mainPage").classList.remove("hidden");
@@ -682,6 +858,7 @@ function showMain(){
 }
 
 $("configurationBtn").addEventListener("click",showConfiguration);
+$("statisticsBtn").addEventListener("click",showStatisticsPage);
 $("backToMain").addEventListener("click",showMain);
 $("uploadResultJson").addEventListener("click",uploadResultJson);
 $("downloadResultsConfig").addEventListener("click",downloadAllResults);
@@ -690,6 +867,7 @@ $("startFirst").addEventListener("click",startWorkoutTimer);
 $("next").addEventListener("click",()=>nextExercise(false));
 
 $("again").addEventListener("click",()=>{
+  releaseScreenWakeLock();
   $("stats").classList.add("hidden");
   $("setup").classList.remove("hidden");
   $("subtitle").textContent=workout?.tornaReszletesNeve||"";
