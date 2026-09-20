@@ -42,6 +42,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .stat{padding:20px;border:1px solid var(--border);border-radius:16px}.number{font-size:2.7rem;font-weight:800;color:var(--accent)}
 .weekly-report{margin-top:24px}.weekly-list{display:grid;gap:10px}.week-row{padding:15px 16px;border:1px solid var(--border);border-radius:14px;background:#fbfcff}.week-heading{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.week-name{font-weight:800}.week-period{font-size:.85rem;color:var(--muted)}.week-data{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}.week-value{font-weight:700}.week-change{font-size:.88rem;color:var(--muted)}.week-change.positive{color:var(--success)}.week-change.negative{color:var(--danger)}.week-bar{height:7px;background:#edf0f5;border-radius:99px;margin-top:12px;overflow:hidden}.week-bar-fill{height:100%;background:linear-gradient(90deg,#4263eb,#6c5ce7);border-radius:99px;min-width:2px}
 .location-report{margin-top:24px}.location-list{display:grid;gap:10px}.location-row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:15px 16px;border:1px solid var(--border);border-radius:14px;background:#fbfcff}.location-name{font-weight:800}.location-meta{color:var(--muted);font-size:.88rem;margin-top:4px}.location-link{white-space:nowrap;background:var(--accent2);color:#3046a8;padding:9px 12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.88rem}
+.local-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}.local-item:last-child{border-bottom:0}.local-item-name{font-weight:700}.danger{background:#fef3f2;color:var(--danger)}
 pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-radius:12px;overflow:auto;font-size:.85rem}
 .notice,.error,.success{padding:12px;border-radius:10px;margin-top:15px}
 .notice{background:#fff7e6;color:#8a5b00}.error{background:#fef3f2;color:#b42318}.success{background:#ecfdf3;color:var(--success)}
@@ -121,6 +122,30 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
 </header>
 
 <section class="card configuration">
+<div class="config-section">
+<h2>Torna leíró JSON készítése AI-val</h2>
+<p>Add meg a torna célját és a gyakorló adatait, majd másold ki a kész promptot egy AI-asszisztensbe. A prompt gyógytornászati szempontból óvatos, személyre szabható JSON-t kér.</p>
+<div class="grid">
+  <div><label for="aiWorkoutGoal">A torna célja</label><textarea id="aiWorkoutGoal" placeholder="Például: reggeli átmozgatás, hát- és csípőkímélő nyújtás"></textarea></div>
+  <div><label for="aiWorkoutLength">Torna hossza és gyakorlatszáma</label><input id="aiWorkoutLength" value="5 perc, 8 gyakorlat"></div>
+  <div><label for="aiAge">Életkor</label><input id="aiAge" placeholder="Például: 52 év"></div>
+  <div><label for="aiWeight">Testsúly</label><input id="aiWeight" placeholder="Például: 78 kg"></div>
+  <div><label for="aiProblems">Egészségügyi problémák, fájdalmak, korlátozások</label><textarea id="aiProblems" placeholder="Például: időnkénti derékfájdalom, térdérzékenység"></textarea></div>
+  <div><label for="aiCondition">Általános fizikai állapot</label><textarea id="aiCondition" placeholder="Például: ülő életmód, kezdő, kevés állóképesség"></textarea></div>
+</div>
+<div class="actions"><button class="primary" id="generateJsonPrompt">JSON-prompt generálása</button></div>
+<textarea id="aiJsonPrompt" readonly placeholder="A másolható AI-prompt itt jelenik meg."></textarea>
+<div class="actions"><button class="secondary" id="copyJsonPrompt">JSON-prompt másolása</button></div>
+
+<h3>Gyakorlatképek promptjának készítése</h3>
+<p>Másold be ide a korábban elkészített teljes <code>torna.json</code> tartalmát. Ezt a rendszer beilleszti a képgeneráló AI promptjába.</p>
+<textarea id="aiWorkoutJson" placeholder="Ide másold be a korábban kapott torna.json teljes tartalmát."></textarea>
+<p class="muted small">A képgeneráló AI-tól olyan felületet kérünk, ahol minden kép a JSON <code>kep</code> mezőjének megfelelő néven, egy gombnyomással letölthető.</p>
+<div class="actions"><button class="secondary" id="generateImagePrompt">Képprompt generálása</button></div>
+<textarea id="aiImagePrompt" readonly placeholder="A másolható képgeneráló prompt itt jelenik meg."></textarea>
+<div class="actions"><button class="secondary" id="copyImagePrompt">Képprompt másolása</button></div>
+</div>
+
 <h2>Torna leíró JSON készítése</h2>
 <p>Új torna esetén hozz létre egy almappát az <code>index.html</code> mellett. Az almappába kerüljön a <code>torna.json</code> és minden, a tornához tartozó kép.</p>
 <pre>torna-app/
@@ -154,7 +179,6 @@ pre{white-space:pre-wrap;background:#101828;color:#f2f4f7;padding:16px;border-ra
   Az alapértelmezés <code>false</code>. A <code>kep</code> mezőben a torna mappájában található fájl neve szerepeljen.
 </p>
 
-
 <div class="config-section">
 <h2>Edzésnapló letöltése</h2>
 <p>Az alábbi gomb a böngészőben tárolt <strong>teljes edzésnaplót</strong> letölti,
@@ -175,6 +199,26 @@ tehát minden személy minden rögzített edzését tartalmazza.</p>
 <div class="actions"><button class="primary" id="uploadResultJson">JSON feltöltése</button></div>
 <div id="uploadMessage"></div>
 </div>
+</div>
+
+<div class="config-section">
+<h2>Helyi tornák</h2>
+<p>ZIP-fájlból tölthetsz be egy tornát a hozzá tartozó JSON- és képfájlokkal együtt. Ezek az adatok csak ebben a böngészőben kerülnek tárolásra.</p>
+<input type="file" id="workoutZipFile" accept=".zip,application/zip">
+<div class="actions"><button class="primary" id="uploadWorkoutZip">Torna ZIP feltöltése</button></div>
+<div id="workoutZipMessage"></div>
+<div id="localWorkoutList"></div>
+</div>
+
+<div class="config-section">
+<h2>Helyi felhasználók</h2>
+<div class="grid">
+  <div><label for="newPersonName">Új felhasználó neve</label><input id="newPersonName" type="text" maxlength="80"></div>
+  <div><label for="newPersonWorkout">Alapértelmezett torna</label><select id="newPersonWorkout"></select></div>
+</div>
+<div class="actions"><button class="primary" id="addPerson">Felhasználó hozzáadása</button></div>
+<div id="personMessage"></div>
+<div id="personList"></div>
 </div>
 
 <div class="config-section">
@@ -245,7 +289,151 @@ const LOG_KEY="reggeliNyujtasNaplo";
 const PERSON_KEY="reggeliNyujtasSzemely";
 const WORKOUT_KEY="reggeliNyujtasTorna";
 const PERSON_WORKOUT_PREFIX="reggeliNyujtasTorna_";
+const LOCAL_PERSONS_KEY="reggeliNyujtasHelyiSzemelyek";
+const DELETED_PERSONS_KEY="reggeliNyujtasToroltSzemelyek";
+const LOCAL_WORKOUT_DB="tornaAppHelyiAdatok";
+let localWorkouts=[];
+let localWorkoutImageUrls={};
 const $=id=>document.getElementById(id);
+
+function openLocalDatabase(){
+  return new Promise((resolve,reject)=>{
+    if(!window.indexedDB){reject(new Error("A böngésző nem támogatja a helyi adattárolást."));return;}
+    const request=indexedDB.open(LOCAL_WORKOUT_DB,1);
+    request.onupgradeneeded=()=>request.result.createObjectStore("workouts",{keyPath:"id"});
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error||new Error("A helyi adatbázis nem nyitható meg."));
+  });
+}
+
+async function getLocalWorkouts(){
+  const db=await openLocalDatabase();
+  return new Promise((resolve,reject)=>{
+    const request=db.transaction("workouts").objectStore("workouts").getAll();
+    request.onsuccess=()=>resolve(request.result||[]);
+    request.onerror=()=>reject(request.error);
+  });
+}
+
+async function saveLocalWorkout(workoutData){
+  const db=await openLocalDatabase();
+  return new Promise((resolve,reject)=>{
+    const request=db.transaction("workouts","readwrite").objectStore("workouts").put(workoutData);
+    request.onsuccess=()=>resolve();
+    request.onerror=()=>reject(request.error);
+  });
+}
+
+async function deleteLocalWorkout(id){
+  const db=await openLocalDatabase();
+  return new Promise((resolve,reject)=>{
+    const request=db.transaction("workouts","readwrite").objectStore("workouts").delete(id);
+    request.onsuccess=()=>resolve();
+    request.onerror=()=>reject(request.error);
+  });
+}
+
+function getLocalPersons(){
+  try{return JSON.parse(localStorage.getItem(LOCAL_PERSONS_KEY)||"[]");}catch(e){return[];}
+}
+
+function getDeletedPersons(){
+  try{return JSON.parse(localStorage.getItem(DELETED_PERSONS_KEY)||"[]");}catch(e){return[];}
+}
+
+function getAvailableWorkouts(){return [...WORKOUTS,...localWorkouts];}
+
+function getZipText(bytes){return new TextDecoder().decode(bytes);}
+
+function findEndOfZip(bytes){
+  for(let offset=bytes.length-22;offset>=Math.max(0,bytes.length-65558);offset--){
+    if(bytes[offset]===0x50&&bytes[offset+1]===0x4b&&bytes[offset+2]===0x05&&bytes[offset+3]===0x06)return offset;
+  }
+  throw new Error("Érvénytelen ZIP-fájl.");
+}
+
+function readZipEntries(buffer){
+  const bytes=new Uint8Array(buffer),view=new DataView(buffer),end=findEndOfZip(bytes);
+  const centralSize=view.getUint32(end+12,true),centralOffset=view.getUint32(end+16,true);
+  const entries=[];let offset=centralOffset;
+  while(offset<centralOffset+centralSize){
+    if(view.getUint32(offset,true)!==0x02014b50)throw new Error("A ZIP központi könyvtára sérült.");
+    const method=view.getUint16(offset+10,true),compressedSize=view.getUint32(offset+20,true);
+    const nameLength=view.getUint16(offset+28,true),extraLength=view.getUint16(offset+30,true),commentLength=view.getUint16(offset+32,true);
+    const name=getZipText(bytes.slice(offset+46,offset+46+nameLength));
+    const localOffset=view.getUint32(offset+42,true);
+    const localNameLength=view.getUint16(localOffset+26,true),localExtraLength=view.getUint16(localOffset+28,true);
+    const dataStart=localOffset+30+localNameLength+localExtraLength;
+    entries.push({name,method,data:bytes.slice(dataStart,dataStart+compressedSize)});
+    offset+=46+nameLength+extraLength+commentLength;
+  }
+  return entries;
+}
+
+async function unzipEntry(entry){
+  if(entry.method===0)return entry.data;
+  if(entry.method!==8||typeof DecompressionStream!=="function"){
+    throw new Error("Ez a ZIP tömörítési mód ebben a böngészőben nem támogatott.");
+  }
+  const stream=new Blob([entry.data]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+function concatBytes(chunks){
+  const result=new Uint8Array(chunks.reduce((total,chunk)=>total+chunk.length,0));let offset=0;
+  chunks.forEach(chunk=>{result.set(chunk,offset);offset+=chunk.length;});
+  return result;
+}
+
+function crc32(bytes){
+  let crc=0xffffffff;
+  for(const byte of bytes){
+    crc^=byte;
+    for(let bit=0;bit<8;bit++)crc=(crc>>>1)^((crc&1)?0xedb88320:0);
+  }
+  return (crc^0xffffffff)>>>0;
+}
+
+function zipBytes(entries){
+  const encoder=new TextEncoder(),local=[],central=[];let offset=0;
+  entries.forEach(entry=>{
+    const name=encoder.encode(entry.name),data=entry.data,crcValue=crc32(data),header=new Uint8Array(30+name.length);
+    const headerView=new DataView(header.buffer);
+    headerView.setUint32(0,0x04034b50,true);headerView.setUint16(4,20,true);headerView.setUint16(6,0x800,true);headerView.setUint16(8,0,true);
+    headerView.setUint32(14,crcValue,true);headerView.setUint32(18,data.length,true);headerView.setUint32(22,data.length,true);
+    headerView.setUint16(26,name.length,true);header.set(name,30);local.push(header,data);
+    const directory=new Uint8Array(46+name.length),directoryView=new DataView(directory.buffer);
+    directoryView.setUint32(0,0x02014b50,true);directoryView.setUint16(4,20,true);directoryView.setUint16(6,0x800,true);
+    directoryView.setUint32(16,crcValue,true);directoryView.setUint32(20,data.length,true);directoryView.setUint32(24,data.length,true);
+    directoryView.setUint16(28,name.length,true);directoryView.setUint32(42,offset,true);directory.set(name,46);central.push(directory);offset+=header.length+data.length;
+  });
+  const localBytes=concatBytes(local),centralBytes=concatBytes(central),end=new Uint8Array(22),endView=new DataView(end.buffer);
+  endView.setUint32(0,0x06054b50,true);endView.setUint16(8,entries.length,true);endView.setUint16(10,entries.length,true);
+  endView.setUint32(12,centralBytes.length,true);endView.setUint32(16,localBytes.length,true);
+  return concatBytes([localBytes,centralBytes,end]);
+}
+
+async function readWorkoutZip(file){
+  const entries=readZipEntries(await file.arrayBuffer()).filter(entry=>!entry.name.endsWith("/"));
+  const jsonEntry=entries.find(entry=>entry.name.toLowerCase().split("/").pop()==="torna.json");
+  if(!jsonEntry)throw new Error("A ZIP nem tartalmaz torna.json fájlt.");
+  const json=JSON.parse(getZipText(await unzipEntry(jsonEntry)));
+  if(!json.tornaId||!Array.isArray(json.feladatok)||!json.feladatok.length)throw new Error("A torna.json szerkezete nem érvényes.");
+  const files=[];
+  for(const entry of entries){
+    if(entry===jsonEntry)continue;
+    const name=entry.name.split("/").pop();
+    if(!name)continue;
+    files.push({name,blob:new Blob([await unzipEntry(entry)])});
+  }
+  const fileNames=new Set(files.map(file=>file.name));
+  const missingImages=json.feladatok
+    .map(exercise=>exercise.kep&&String(exercise.kep).split("/").pop())
+    .filter(fileName=>fileName&&!fileNames.has(fileName));
+  if(missingImages.length)throw new Error("Hiányzó képfájl: "+missingImages.join(", "));
+  const id="local-"+String(json.tornaId).replace(/[^a-zA-Z0-9_-]/g,"_");
+  return {id,local:true,data:json,files,sourceName:file.name};
+}
 
 function formatTime(sec){
   const m=Math.floor(Math.abs(sec)/60),s=Math.abs(sec)%60;
@@ -334,22 +522,26 @@ async function loadConfig(){
 }
 
 async function loadPersons(){
+  const deleted=new Set(getDeletedPersons());
+  const local=getLocalPersons();
   try{
     if(location.protocol==="file:"){
-      persons=LOCAL_PERSONS_FALLBACK.szemelyek;
-      return;
+      persons=LOCAL_PERSONS_FALLBACK.szemelyek.filter(person=>!deleted.has(person.nev));
+    }else{
+      const r=await fetch(PERSONS_JSON+"?v="+Date.now(),{cache:"no-store"});
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      const data=await r.json();
+      persons=Array.isArray(data.szemelyek)?data.szemelyek.filter(person=>!deleted.has(person.nev)):[];
     }
-    const r=await fetch(PERSONS_JSON+"?v="+Date.now(),{cache:"no-store"});
-    if(!r.ok)throw new Error("HTTP "+r.status);
-    const data=await r.json();
-    persons=Array.isArray(data.szemelyek)?data.szemelyek:[];
   }catch(e){
     console.error("szemelyek.json betöltési hiba:",e);
-    persons=LOCAL_PERSONS_FALLBACK.szemelyek;
+    persons=LOCAL_PERSONS_FALLBACK.szemelyek.filter(person=>!deleted.has(person.nev));
   }
+  local.forEach(person=>{if(!persons.some(item=>item.nev===person.nev))persons.push(person);});
 }
 
 async function loadWorkoutJson(item){
+  if(item.local)return item.data;
   if(location.protocol==="file:"&&LOCAL_JSON_FALLBACKS[item.id]){
     return LOCAL_JSON_FALLBACKS[item.id];
   }
@@ -359,9 +551,10 @@ async function loadWorkoutJson(item){
 }
 
 async function loadWorkoutOptions(){
+  try{localWorkouts=await getLocalWorkouts();}catch(e){localWorkouts=[];console.warn("Helyi tornák nem tölthetők be:",e);}
   const select=$("workoutSelect");
   select.innerHTML="";
-  for(const item of WORKOUTS){
+  for(const item of getAvailableWorkouts()){
     try{
       const data=await loadWorkoutJson(item);
       const option=document.createElement("option");
@@ -373,6 +566,61 @@ async function loadWorkoutOptions(){
     }
   }
   restoreWorkoutSelection();
+}
+
+function getLocalImageUrl(workoutId,fileName){
+  const item=localWorkouts.find(workoutItem=>workoutItem.id===workoutId);
+  const file=item?.files.find(localFile=>localFile.name===String(fileName).split("/").pop());
+  if(!file)return "";
+  const key=workoutId+":"+file.name;
+  if(!localWorkoutImageUrls[key])localWorkoutImageUrls[key]=URL.createObjectURL(file.blob);
+  return localWorkoutImageUrls[key];
+}
+
+function renderLocalWorkouts(){
+  const container=$("localWorkoutList");
+  if(!localWorkouts.length){container.innerHTML='<p class="muted small">Nincs helyileg feltöltött torna.</p>';return;}
+  container.innerHTML=localWorkouts.map(item=>`<div class="local-item"><div><div class="local-item-name">${escapeHtml(item.data.tornaReszletesNeve||item.data.tornaId)}</div><div class="muted small">${escapeHtml(item.sourceName||"ZIP-fájl")}</div></div><div class="actions"><button class="secondary" data-export-workout="${escapeHtml(item.id)}">Letöltés</button><button class="danger" data-delete-workout="${escapeHtml(item.id)}">Törlés</button></div></div>`).join("");
+  container.querySelectorAll("[data-export-workout]").forEach(button=>button.addEventListener("click",()=>exportLocalWorkout(button.dataset.exportWorkout)));
+  container.querySelectorAll("[data-delete-workout]").forEach(button=>button.addEventListener("click",()=>removeLocalWorkout(button.dataset.deleteWorkout)));
+}
+
+async function uploadWorkoutZip(){
+  const file=$("workoutZipFile").files[0];
+  if(!file){showLocalMessage("Válassz ki egy ZIP-fájlt.","workoutZipMessage","error");return;}
+  try{
+    const imported=await readWorkoutZip(file);
+    if(localWorkouts.some(item=>item.id===imported.id)&&!confirm("Ez a torna már létezik. Lecseréled a helyi példányt?"))return;
+    await saveLocalWorkout(imported);
+    await loadWorkoutOptions();
+    renderLocalWorkouts();
+    renderPersonWorkoutOptions();
+    showLocalMessage("A torna sikeresen feltöltve.","workoutZipMessage","success");
+  }catch(error){
+    console.error(error);
+    showLocalMessage("A torna ZIP feltöltése sikertelen: "+error.message,"workoutZipMessage","error");
+  }
+}
+
+async function exportLocalWorkout(id){
+  const item=localWorkouts.find(workoutItem=>workoutItem.id===id);
+  if(!item)return;
+  const entries=[{name:"torna.json",data:new TextEncoder().encode(JSON.stringify(item.data,null,2))}];
+  for(const file of item.files)entries.push({name:file.name,data:new Uint8Array(await file.blob.arrayBuffer())});
+  const blob=new Blob([zipBytes(entries)],{type:"application/zip"});
+  const url=URL.createObjectURL(blob),link=document.createElement("a");
+  link.href=url;link.download=(item.data.tornaId||"torna")+".zip";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);
+}
+
+async function removeLocalWorkout(id){
+  const item=localWorkouts.find(workoutItem=>workoutItem.id===id);
+  if(!item||!confirm(`Biztosan törlöd a(z) „${item.data.tornaReszletesNeve||item.data.tornaId}” helyi tornát?`))return;
+  await deleteLocalWorkout(id);
+  Object.keys(localWorkoutImageUrls).filter(key=>key.startsWith(id+":")).forEach(key=>{URL.revokeObjectURL(localWorkoutImageUrls[key]);delete localWorkoutImageUrls[key];});
+  await loadWorkoutOptions();
+  renderLocalWorkouts();
+  renderPersonWorkoutOptions();
+  showLocalMessage("A helyi torna törölve.","workoutZipMessage","success");
 }
 
 function populatePersons(){
@@ -388,13 +636,53 @@ function populatePersons(){
   currentPerson=select.value;
 }
 
+function showLocalMessage(message,id,type){
+  $(id).innerHTML=`<div class="${type}">${escapeHtml(message)}</div>`;
+}
+
+function renderPersonWorkoutOptions(){
+  const select=$("newPersonWorkout");
+  if(!select)return;
+  select.innerHTML=getAvailableWorkouts().map(item=>`<option value="${escapeHtml(item.id)}">${escapeHtml(item.data?.tornaReszletesNeve||item.tornaReszletesNeve||item.id)}</option>`).join("");
+}
+
+function renderPersonList(){
+  const container=$("personList");
+  container.innerHTML=persons.length?persons.map(person=>`<div class="local-item"><div class="local-item-name">${escapeHtml(person.nev)}</div><button class="danger" data-delete-person="${escapeHtml(person.nev)}">Törlés</button></div>`).join(""):"<p class=\"muted small\">Nincs felhasználó.</p>";
+  container.querySelectorAll("[data-delete-person]").forEach(button=>button.addEventListener("click",()=>removePerson(button.dataset.deletePerson)));
+}
+
+function addPerson(){
+  const name=$("newPersonName").value.trim();
+  if(!name){showLocalMessage("Add meg a felhasználó nevét.","personMessage","error");return;}
+  if(persons.some(person=>person.nev.toLowerCase()===name.toLowerCase())){showLocalMessage("Ez a felhasználó már létezik.","personMessage","error");return;}
+  const workoutId=$("newPersonWorkout").value||getAvailableWorkouts()[0]?.id||"";
+  const local=getLocalPersons();local.push({nev:name,alapertelmezettTorna:workoutId});
+  localStorage.setItem(LOCAL_PERSONS_KEY,JSON.stringify(local));
+  const deleted=getDeletedPersons().filter(person=>person!==name);
+  localStorage.setItem(DELETED_PERSONS_KEY,JSON.stringify(deleted));
+  persons.push({nev:name,alapertelmezettTorna:workoutId});
+  populatePersons();$("person").value=name;currentPerson=name;renderPersonList();$("newPersonName").value="";
+  showLocalMessage("A felhasználó hozzáadva.","personMessage","success");
+}
+
+function removePerson(name){
+  if(!confirm(`Biztosan törlöd a(z) „${name}” felhasználót?`))return;
+  const local=getLocalPersons().filter(person=>person.nev!==name);
+  localStorage.setItem(LOCAL_PERSONS_KEY,JSON.stringify(local));
+  const deleted=getDeletedPersons();if(!deleted.includes(name))deleted.push(name);
+  localStorage.setItem(DELETED_PERSONS_KEY,JSON.stringify(deleted));
+  persons=persons.filter(person=>person.nev!==name);populatePersons();renderPersonList();
+  showLocalMessage("A felhasználó törölve. A Gitből érkező személyfájl nem módosult.","personMessage","success");
+}
+
 function getPersonDefaultWorkout(name){
   const p=persons.find(x=>x.nev===name);
-  if(!p)return WORKOUTS[0]?.id||"";
+  if(!p)return getAvailableWorkouts()[0]?.id||"";
   return localStorage.getItem(PERSON_WORKOUT_PREFIX+name)||
          p.alapertelmezettTorna||
          localStorage.getItem(WORKOUT_KEY)||
-         WORKOUTS[0]?.id||"";
+         getAvailableWorkouts()[0]?.id||"";
 }
 
 function restoreWorkoutSelection(){
@@ -459,11 +747,15 @@ function renderExercise(){
   $("timer").classList.remove("overtime");
   $("progress").style.width=((index/workout.feladatok.length)*100)+"%";
 
-  const item=WORKOUTS.find(w=>w.id===currentWorkoutId);
+  const item=getAvailableWorkouts().find(w=>w.id===currentWorkoutId);
   if(item){
-    const slash=item.json.lastIndexOf("/");
-    const folder=slash>=0?item.json.substring(0,slash):"";
-    $("image").src=folder?folder+"/"+e.kep:e.kep;
+    if(item.local){
+      $("image").src=getLocalImageUrl(item.id,e.kep);
+    }else{
+      const slash=item.json.lastIndexOf("/");
+      const folder=slash>=0?item.json.substring(0,slash):"";
+      $("image").src=folder?folder+"/"+e.kep:e.kep;
+    }
   }
 
   /*
@@ -845,6 +1137,91 @@ function showUploadMessage(message,type){
   $("uploadMessage").innerHTML=`<div class="${type}">${escapeHtml(message)}</div>`;
 }
 
+function getAiProfile(){
+  return {
+    goal:$("aiWorkoutGoal").value.trim()||"általános, kíméletes átmozgatás",
+    length:$("aiWorkoutLength").value.trim()||"5 perc, 8 gyakorlat",
+    age:$("aiAge").value.trim()||"nincs megadva",
+    weight:$("aiWeight").value.trim()||"nincs megadva",
+    problems:$("aiProblems").value.trim()||"nincs megadva",
+    condition:$("aiCondition").value.trim()||"nincs megadva"
+  };
+}
+
+function generateJsonPrompt(){
+  const profile=getAiProfile();
+  $("aiJsonPrompt").value=`Te egy profi gyógytornász vagy. Készíts biztonságos, személyre szabott reggeli tornát az alábbi adatok alapján.
+
+A torna célja: ${profile.goal}
+A torna hossza és gyakorlatszáma: ${profile.length}
+A gyakorló életkora: ${profile.age}
+A gyakorló testsúlya: ${profile.weight}
+Egészségügyi problémák, fájdalmak, korlátozások: ${profile.problems}
+Általános fizikai állapot: ${profile.condition}
+
+Biztonsági szabályok:
+- Ne diagnosztizálj, és ne ígérj gyógyulást.
+- Ha a megadott probléma vagy tünet miatt nem biztonságos a torna, ezt a válasz elején jelezd, és javasolj orvosi vagy gyógytornászi egyeztetést.
+- Ne adj fájdalmat kiváltó, hirtelen, rángatózó vagy túlterhelő gyakorlatot.
+- Minden gyakorlatnál adj könnyített változatot vagy állj meg jelzést, ha ez indokolt.
+
+Kimeneti követelmény:
+- Készíts egy letölthető, pontosan torna.json nevű fájlt, és jeleníts meg egy jól látható „JSON letöltése” gombot, amely egyetlen kattintással letölti a fájlt.
+- A letöltött fájl tartalma kizárólag érvényes JSON legyen, Markdown kódblokk, magyarázat vagy bevezető szöveg nélkül.
+- A letöltőgomb mellett jelenítsd meg a nyers JSON-t is ellenőrzéshez és másoláshoz.
+- A JSON pontosan ezt a szerkezetet kövesse:
+{
+  "tornaId": "rovid_ekezet_nelkuli_azonosito",
+  "tornaReszletesNeve": "A torna neve",
+  "feladatok": [
+    {
+      "nev": "Gyakorlat neve",
+      "hosszMasodperc": 30,
+      "kep": "gyakorlat_01.jpg",
+      "leiras": "Részletes, közérthető végrehajtási leírás.",
+      "automatikus_kovetkezo": false
+    }
+  ]
+}
+
+A hosszMasodperc pozitív egész legyen. A kep mezőben csak ékezet nélküli, kisbetűs JPG-fájlnév szerepeljen. A fájlnév legyen rövid, beszédes és a konkrét gyakorlatot írja le, ne általános sorszám legyen: például a vádli nyújtásához használj ilyen nevet: vadli_nyujta.jpg. A leírás legyen konkrét, és tartalmazza a testhelyzetet, a mozdulatot, a légzést és a biztonsági figyelmeztetést. Az automatikus_kovetkezo értéke alapértelmezésben false legyen.`;
+}
+
+function generateImagePrompt(){
+  const profile=getAiProfile();
+  const workoutJson=$("aiWorkoutJson").value.trim()||"[IDE ILLESZD BE A KORÁBBAN GENERÁLT TELJES torna.json TARTALMÁT]";
+  $("aiImagePrompt").value=`Készíts egységes, oktató jellegű gyakorlatbemutató grafikákat a következő gyógytorna-programhoz: ${profile.goal}.
+
+Az alábbi, korábban elkészített torna.json a forrásod. Olvasd ki belőle az összes feladatot, és minden feladathoz készíts képet. A képfájl neve minden esetben pontosan az adott feladat "kep" mezőjének értéke legyen.
+
+--- TORNA.JSON KEZDETE ---
+${workoutJson}
+--- TORNA.JSON VÉGE ---
+
+Te egy profi gyógytornász és egészségügyi oktató képi asszisztense vagy. Fotó helyett készíts tiszta, modern, részletes egészségügyi oktató grafikákat vagy digitális illusztrációkat. Minden grafika egy világos, rendezett tornateremben vagy gyógytorna-teremben játszódjon, ahol látható néhány bordásfal, tornaszőnyeg és kevés, visszafogott teremfelszerelés. A háttér ne vonja el a figyelmet a gyakorlatról. Mutasd a teljes testet, természetes és biztonságos testtartással, jól felismerhető anatómiai helyzetben. Ne legyen rajta felirat, logó, vízjel, dekoráció vagy félreérthető póz. A grafikák legyenek egységes stílusúak, 16:10 képarányúak, és egyértelműen mutassák a kiinduló és a véghelyzetet, ha ez szükséges.
+
+A gyakorló profilja: életkor ${profile.age}; testsúly ${profile.weight}; egészségügyi problémák és korlátozások: ${profile.problems}; általános fizikai állapot: ${profile.condition}.
+
+Készíts minden JSON-ban szereplő gyakorlathoz egy külön, JPG formátumú grafikát. A képfájl mérete legyen körülbelül 100 KB képenként, miközben a grafika maradjon jól látható és használható. Ne mutass veszélyes, fájdalmas vagy túlzott mozgástartományt. Ha egy gyakorlat képi megjelenítése egészségügyi okból félreérthető, készíts egyszerű, biztonságosabb bemutató grafikát, vagy jelezd, hogy szakember ellenőrzése szükséges.
+
+Letöltési követelmények:
+- Készíts minden elkészült képhez külön, jól látható „Kép letöltése” gombot.
+- A gomb egyetlen kattintással töltse le az adott képet pontosan a JSON "kep" mezőjében megadott, beszédes fájlnévvel, például vadli_nyujta.jpg.
+- Készíts egy „Összes kép letöltése” gombot is, amely az összes képet a megfelelő fájlnévvel tölti le, lehetőleg ZIP-fájlként.
+- A ZIP-ben minden kép JPG legyen, és minden fájl mérete körülbelül 100 KB legyen, amennyire a képgeneráló és tömörítő eszköz ezt lehetővé teszi.
+- A letöltött képek ténylegesen használhatók legyenek a torna ZIP-fájljában, és ne kapjanak automatikusan generált, eltérő fájlnevet.`;
+}
+
+async function copyTextFrom(id){
+  const text=$(id).value;
+  if(!text)return;
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    $(id).focus();$(id).select();document.execCommand("copy");
+  }
+}
+
 function renderConfiguration(){
   $("configDisplay").textContent=JSON.stringify(appConfig,null,2);
   if(appConfig.enable_result_upload){
@@ -860,6 +1237,9 @@ function showConfiguration(){
   $("mainPage").classList.add("hidden");
   $("configurationPage").classList.remove("hidden");
   renderConfiguration();
+  renderLocalWorkouts();
+  renderPersonWorkoutOptions();
+  renderPersonList();
   history.pushState({page:"configuration"},"","#configuration");
 }
 
@@ -884,6 +1264,12 @@ $("statisticsBtn").addEventListener("click",showStatisticsPage);
 $("backToMain").addEventListener("click",showMain);
 $("uploadResultJson").addEventListener("click",uploadResultJson);
 $("downloadResultsConfig").addEventListener("click",downloadAllResults);
+$("generateJsonPrompt").addEventListener("click",generateJsonPrompt);
+$("copyJsonPrompt").addEventListener("click",()=>copyTextFrom("aiJsonPrompt"));
+$("generateImagePrompt").addEventListener("click",generateImagePrompt);
+$("copyImagePrompt").addEventListener("click",()=>copyTextFrom("aiImagePrompt"));
+$("uploadWorkoutZip").addEventListener("click",uploadWorkoutZip);
+$("addPerson").addEventListener("click",addPerson);
 $("startFirst").addEventListener("click",startWorkoutTimer);
 /* A click esemény nem azonos az auto=true paraméterrel. */
 $("next").addEventListener("click",()=>nextExercise(false));
@@ -902,7 +1288,7 @@ $("begin").addEventListener("click",async()=>{
   localStorage.setItem(WORKOUT_KEY,selected);
   localStorage.setItem(PERSON_WORKOUT_PREFIX+currentPerson,selected);
 
-  const item=WORKOUTS.find(w=>w.id===selected);
+  const item=getAvailableWorkouts().find(w=>w.id===selected);
   if(!item)return;
 
   try{
@@ -939,6 +1325,9 @@ window.addEventListener("popstate",()=>{
     $("mainPage").classList.add("hidden");
     $("configurationPage").classList.remove("hidden");
     renderConfiguration();
+    renderLocalWorkouts();
+    renderPersonWorkoutOptions();
+    renderPersonList();
   }else{
     showMain();
   }
@@ -949,6 +1338,9 @@ async function initialize(){
   await loadPersons();
   populatePersons();
   await loadWorkoutOptions();
+  renderLocalWorkouts();
+  renderPersonWorkoutOptions();
+  renderPersonList();
 
   if(location.hash==="#configuration"){
     $("mainPage").classList.add("hidden");
